@@ -8,9 +8,13 @@
 # print(*s)
 
 
-lst, s = input().split(), set()
+# lst, s = input().split(), set()
+#
+# for i in lst:
+#     if lst.count(i) > 1:
+#         s.add(i)
+# print(*s)
 
-for i in lst:
-    if lst.count(i) > 1:
-        s.add(i)
-print(*s)
+
+lst, s = input().split(), set()
+print(*set(filter(lambda i: lst.count(i) > 1, lst)))
