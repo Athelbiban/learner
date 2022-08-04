@@ -16,5 +16,9 @@
 # print(*s)
 
 
+# lst = input().split()
+# print(*set(filter(lambda i: lst.count(i) > 1, lst)))
+
+
 lst = input().split()
-print(*set(filter(lambda i: lst.count(i) > 1, lst)))
+print(*set([i for i in lst if lst.count(i) > 1]))
