@@ -24,28 +24,15 @@
 # 4
 
 
-counter, s, x = 0, [], []
+s = []
 n = input()
 
 while n != 'end':
     s.append([int(i) for i in n.split()])
     n = input()
-    counter += 1
-
-k = [[] for t in range(counter)]
 
 for j, u in enumerate(s):
     for i, _ in enumerate(u):
-        x.append(s[j - 1][i] + s[(j + 1) % len(s)][i] + s[j][i - 1] + s[j][(i + 1) % len(s[0])])
-
-for e in range(counter):
-    c = 0
-    for g in x:
-        k[e].append(g)
-        c += 1
-        if c >= len(s[0]):
-            break
-    del x[:len(s[0])]
-
-for _, b in enumerate(k):
-    print(*b)
+        print(s[j - 1][i] + s[(j + 1) % len(s)][i] +
+              s[j][i - 1] + s[j][(i + 1) % len(s[0])], end=' ')
+    print()
