@@ -1,16 +1,6 @@
-import time
-
-start = time.time()
-
-
-n = 2000000
-list_number = [i for i in range(n+1)]
-for i in range(2, int(n**.5)+1):
-    if list_number[i]:
-        for j in range(i*i, n+1, i):
-            list_number[j] = 0
-print(sum(list_number)-1)
-
-
-end = time.time()
-print('Время выполнения: {:.2f} сек. (~ {:.1f} мин.)'.format((end - start), ((end - start) / 60)))
+cords = list(map(str,[111,211,311,121,221,321,131,231,331,112,212,312,122,222,322,132,232,332,113,213,313,123,223,323,133,233,333]))
+alpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ '
+dic = {a:c for a,c in zip(alpha, cords)}
+print(cords)
+print(dic)
+print(alpha[25])
