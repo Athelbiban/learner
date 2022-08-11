@@ -33,6 +33,5 @@ while n != 'end':
 
 for j, u in enumerate(s):
     for i, _ in enumerate(u):
-        print(s[j - 1][i] + s[(j + 1) % len(s)][i] +
-              s[j][i - 1] + s[j][(i + 1) % len(s[0])], end=' ')
+        print(s[j - 1][i] + s[(j + 1) % len(s)][i] + s[j][i - 1] + s[j][(i + 1) % len(s[0])], end=' ')
     print()
