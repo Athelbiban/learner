@@ -1,3 +1,1 @@
-petrov;85;92;78
-sidorov;100;88;94
-ivanov;58;72;85
+http://example.com
