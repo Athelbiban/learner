@@ -1,4 +1,5 @@
-with open(r'files/dataset_3380_5.txt', encoding='utf-8') as inf, open(r'files/answer.txt', 'w', encoding='utf-8') as ouf:
+with open(r'files/dataset_3380_5.txt', encoding='utf-8') as inf,\
+        open(r'files/answer.txt', 'w', encoding='utf-8') as ouf:
     d, s = {str(i): '-' for i in range(1, 12)}, []
     for i in inf:
         c, _, h = i.split()
