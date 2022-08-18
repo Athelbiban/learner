@@ -1,4 +1,15 @@
+"""Задача Эйлера №4:
+Число-палиндром с обеих сторон (справа налево и слева направо) читается одинаково.
+Самое большое число-палиндром, полученное умножением двух двузначных чисел – 9009 = 91 × 99.
+Найдите самый большой палиндром, полученный умножением двух трехзначных чисел.
+"""
+
 import time
+
+start = time.time()
+
+number_1 = 999
+number_2 = 999
 
 
 def is_palindrome(num):
@@ -30,9 +41,12 @@ def largest_palindrome(num_1, num_2):
             if is_palindrome(result_01):
                 list_palindrome += [result_01]
                 break
-    dt = time.time() - startTime
-    return sorted(list_palindrome, reverse=True)[0], dt
+    return sorted(list_palindrome, reverse=True)[0]
 
 
-startTime = time.time()
-print(largest_palindrome(999, 999))
+result = largest_palindrome(number_1, number_2)
+
+print(result)
+
+end = time.time()
+print('Время выполнения: {:.2f} сек. (~ {:.1f} мин.)'.format((end - start), ((end - start) / 60)))
