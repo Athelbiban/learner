@@ -3,27 +3,53 @@ import time
 start = time.time()
 
 
-def next_triangle_number(index_triangle_nuber):
-    next_index = index_triangle_nuber + 1
-    triangle_number = 0
-    for i in range(1, next_index + 1):
-        triangle_number += i
-    return is_more_500_dividers(triangle_number, next_index)
+def foo(num):
+    lst = list(range(num + 1))
+    for i in range(2, int(num ** 0.5) + 1):
+        if lst[i]:
+            for y in range(i * i, num + 1, i):
+                lst[y] = 0
+    lst = sorted(list(set(lst)))[2:]
+    return moo(num, lst)
 
 
-def is_more_500_dividers(number, index):
-    dividers = 0
-    for e in range(1, number // 2):
-        if not number % e:
-            dividers += 1
-    print(dividers)
-    if dividers <= 500:
-        next_triangle_number(index)
-    return number
+def moo(x, d):
+    s = []
+    if x == 1:
+        return s
+    for i in d:
+        def boo(a, b):
+            if a % b == 0:
+                c = a // b
+                s.append(b)
+                return boo(c, b)
+            return
+        boo(x, i)
+    return s
 
 
-n, i = 1, 1
+def voo(num):
+    stp = foo(num)
+    z = 1
+    for i in set(stp):
+        z *= stp.count(i) + 1
+    return z
 
-print(is_more_500_dividers(n, i))
+
+n = 1
+while True:
+    k = int(n/2*(n+1))
+    d = voo(k)
+    # for i in range(1, n + 1):
+    #     k += i
+    # for e in range(2, k // 2 + 1):
+    #     if not k % e:
+    #         d += 1
+    if d < 150:
+        n += 1
+    else:
+        break
+
+print(k, d, n)
 end = time.time() - start
 print(end)
