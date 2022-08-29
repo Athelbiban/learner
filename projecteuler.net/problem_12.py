@@ -3,67 +3,49 @@ import time
 start = time.time()
 
 
-# def foo(num):
-#     lst = list(range(num + 1))
-#     for i in range(2, int(num ** 0.5) + 1):
-#         if lst[i]:
-#             for y in range(i * i, num + 1, i):
-#                 lst[y] = 0
-#     lst = sorted(list(set(lst)))[2:]
-#     return moo(num, lst)
-#
-#
-# def moo(x, d):
-#     s = []
-#     if x == 1:
-#         return s
-#     for i in d:
-#         def boo(a, b):
-#             if a % b == 0:
-#                 c = a // b
-#                 s.append(b)
-#                 return boo(c, b)
-#             return
-#         boo(x, i)
-#     return s
-#
-#
-# def voo(num):
-#     stp = foo(num)
-#     z = 1
-#     for i in set(stp):
-#         z *= stp.count(i) + 1
-#     return z
-#
-#
-# n = 1
-# while True:
-#     k = int(n/2*(n+1))
-#     d = voo(k)
-#     # for i in range(1, n + 1):
-#     #     k += i
-#     # for e in range(2, k // 2 + 1):
-#     #     if not k % e:
-#     #         d += 1
-#     if d < 150:
-#         n += 1
-#     else:
-#         break
-#
-# print(k, d, n)
-
-def dividers(n, s):
+def prime_dividers(n, lst, e=2):
     if n == 1:
-        return s
+        return lst
     else:
-        for i in range(2, n + 1):
+        for i in range(e, n + 1):
             if n % i == 0:
-                s.append(i)
-                return dividers(n // i, s)
+                lst.append(i)
+                return prime_dividers(n // i, lst, i)
 
 
-lst = []
+def all_dividers(s):
+    div = 1
+    a = s[0]
+    counter = 1
+    for i in s:
+        if i == a:
+            counter += 1
+        else:
+            div *= counter
+            counter = 2
+            a = i
+    return div * counter
+
+
+def main():
+    numb = 2
+    while True:
+        lst = []
+        triangle_numb = (numb * (numb + 1)) // 2
+        prime_div = prime_dividers(triangle_numb, lst)
+        all_div = all_dividers(prime_div)
+        if all_div < 500:
+            numb += 1
+        else:
+            break
+    return f'Номер треугольного числа: {numb}\n' \
+           f'Треугольное число: {triangle_numb}\n' \
+           f'Количество делителей: {all_div}'
+
+
 if __name__ == '__main__':
-    print(dividers(84, lst))
+    print(main())
+
+
 end = time.time() - start
-print(end)
+print(f'Время выполнения (сек.): {end}')
