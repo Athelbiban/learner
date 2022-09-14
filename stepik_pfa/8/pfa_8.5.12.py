@@ -1,5 +1,6 @@
-n = int(input())
-a = set()
-a = set(a.add(input().lower()) for _ in range(n))
+e = set()
 
-print(a)
+for _ in range(int(input())):
+    e |= set(input().lower())
+
+print(len(e))
