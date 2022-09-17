@@ -37,9 +37,8 @@ def decimal_number(num, s, roman=''):
 
 
 def main(n):
-    s = {4: 'IV', 9: 'IX', 40: 'XL', 90: 'XC', 400: 'CD', 900: 'CM',
-         1: 'I', 5: 'V', 10: 'X', 50: 'L', 100: 'C', 500: 'D', 1000: 'M'}
-    s = dict(sorted(s.items(), key=lambda x: x[0], reverse=True))
+    s = {1000: 'M', 900: 'CM', 500: 'D', 400: 'CD', 100: 'C', 90: 'XC',
+         50: 'L', 40: 'XL', 10: 'X', 9: 'IX', 5: 'V', 4: 'IV', 1: 'I'}
     number_roman = ''
     for i, e in enumerate(reversed(n)):
         number = int(e) * 10 ** i
