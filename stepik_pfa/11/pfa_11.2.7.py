@@ -42,15 +42,15 @@ Sample Output 2:
 Циркуль 1
 """
 
-
 d = {}
 
 for _ in range(int(input())):
     k1, k2, v = input().split()
-    d[k1] = d.get(k1, dict())
-    d[k1][k2] = d[k1].get(k2, 0) + int(v)
+    d[k1][k2] = d.setdefault(k1, {}).setdefault(k2, 0) + int(v)  # Или в 2 строки см. ниже
+    # d[k1] = d.get(k1, dict())
+    # d[k1][k2] = d[k1].get(k2, 0) + int(v)
 
 for i in sorted(d):
     print(f'{i}:')
-    for e in sorted(d[i]):
-        print(e, d[i][e])
+    for e in sorted(d[i].items()):
+        print(*e)
