@@ -1,8 +1,8 @@
 import turtle as t
 
-for i in range(10, 21, 2):
-    for e in ['red', 'blue', 'yellow', 'green', 'purple', 'orange']:
-        t.pencolor(e)
-        t.pensize(i // 2)
-        t.fd(10*i)
-        t.lt(45)
+c = ['red', 'blue', 'yellow', 'green', 'purple', 'orange']
+for i in range(45):
+    t.pencolor(c[i%6])
+    t.pensize(i//3)
+    t.fd(i*2)
+    t.lt(45)
