@@ -21,4 +21,5 @@ if __name__ == '__main__':
     signs = tuple("!#$%&'()*+,-./:;<=>?@[]^_`{|}~\"")
     low_up_dig = low + up + dig
     all_char = low + up + dig + signs
-    print(*generate_passwords(int(input()), int(input())), sep='\n')
+    print(*generate_passwords(int(input('Сколько паролей генерировать: ')),
+                              int(input('Количество символов в пароле: '))), sep='\n')
