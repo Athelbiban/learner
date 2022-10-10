@@ -8,7 +8,6 @@ t.penup()
 t.fd(200)
 t.shape('circle')
 t.shapesize(10)
-t.shapesize(10)
 t.color('#052DFE')
 t.showturtle()
 
