@@ -1,0 +1,28 @@
+import turtle as t
+
+t.speed(0)
+t.pensize(6)
+t.ht()
+t.lt(22.5)
+t.circle(180, 360, 8)
+t.penup()
+t.goto(-4.5, 10.5)
+t.pendown()
+t.pencolor('red')
+t.fillcolor('red')
+t.begin_fill()
+t.circle(169, 360, 8)
+t.end_fill()
+
+t.pencolor('white')
+t.penup()
+t.goto(-180, 100)
+t.write('S', align='center', font=('Arial', 80, 'normal'))
+t.goto(-110, 100)
+t.write('T', align='center', font=('Arial', 80, 'normal'))
+t.goto(-35, 100)
+t.write('O', align='center', font=('Arial', 80, 'normal'))
+t.goto(45, 100)
+t.write('P', align='center', font=('Arial', 80, 'normal'))
+
+t.done()
