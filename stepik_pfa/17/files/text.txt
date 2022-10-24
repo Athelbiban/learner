@@ -1,1 +1,0 @@
-Read secret_message.txt and print out the first letter of each line.
