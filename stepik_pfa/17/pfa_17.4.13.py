@@ -13,5 +13,5 @@
 
 
 for _ in range(int(input())):
-    with open(f'{input()}', encoding='utf-8') as inf, open('files/output1.txt', 'a', encoding='utf-8') as ouf:
+    with open(f'{input()}', encoding='utf-8') as inf, open('files/output3.txt', 'a', encoding='utf-8') as ouf:
         ouf.write(inf.read())
