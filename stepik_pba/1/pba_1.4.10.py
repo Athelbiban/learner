@@ -1,7 +1,12 @@
-def namespaces(get_list):
-    # d = {'global': {}}
-    # for func, name1, name2 in get_list:
-    #     if func == 'add':
+def workspaces(get_list):
+    d = {'global': {'a': {}, 'foo': {}}}
+    for func, name1, name2 in get_list:
+        def add(namespace, var, n):
+
+            if namespace in n:
+
+            return add(d[namespace], var)
+        # if func == 'add':
     #         d['global'].setdefault(name1, name2)
     #     elif func == 'create':
 
@@ -9,4 +14,4 @@ def namespaces(get_list):
 
 
 if __name__ == '__main__':
-    print(namespaces([input().split() for _ in range(int(input()))]))
+    print(workspaces([input().split() for _ in range(int(input()))]))
