@@ -1,17 +1,27 @@
 def workspaces(get_list):
-    d = {'global': {'a': {}, 'foo': {}}}
-    for func, name1, name2 in get_list:
-        def add(namespace, var, n):
+    global d
+    func, name1, name2 = get_list
 
-            # if namespace in n:
+    def add(namespace, var):
+        d[namespace]['var'].add(var)
 
-            return add(d[namespace], var)
-        # if func == 'add':
-    #         d['global'].setdefault(name1, name2)
-    #     elif func == 'create':
+    def create(namespace, parent):
+        d.setdefault(namespace, {'var': set(), 'parent': parent})
 
-    return d
+    def get(namespace, var):
+        if namespace is None or var in d[namespace]['var']:
+            return print(namespace)
+        return get(d[namespace]['parent'], var)
+
+    if func == 'add':
+        add(name1, name2)
+    elif func == 'create':
+        create(name1, name2)
+    else:
+        get(name1, name2)
 
 
 if __name__ == '__main__':
-    print(workspaces([input().split() for _ in range(int(input()))]))
+    d = {'global': {'var': set(), 'parent': None}}
+    for lst in [input().split() for _ in range(int(input()))]:
+        workspaces(lst)
