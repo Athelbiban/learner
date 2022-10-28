@@ -3,7 +3,7 @@ def workspaces(get_list):
     for func, name1, name2 in get_list:
         def add(namespace, var, n):
 
-            if namespace in n:
+            # if namespace in n:
 
             return add(d[namespace], var)
         # if func == 'add':
