@@ -19,17 +19,29 @@ def way(n):
 
 
 def main():
-    n = 9
+    n = 3
     ways = []
-    for _ in range(750_000):
+    points_val = 0
+    for _ in range(10_000):
         w, w_inv = way(n)
         if w not in ways:
             ways.append(w)
             ways.append(w_inv)
-    # for k in ways:
-        # print(*k, sep='\n')
+
+    # for v in ways:
+    #     if v[0][1] == 1:
+    #         points_val += 1
+    #     print(points_val)
+
+    for i, k in enumerate(ways, 1):
+        if k[1][2] == 1:
+            points_val += 1
+    print(points_val)
+    #     print(i)
+    #     print(*k, sep='\n')
+    #     print()
     # print(ways)
-    print(len(ways))
+    # print(len(ways))
 
 
 if __name__ == '__main__':
