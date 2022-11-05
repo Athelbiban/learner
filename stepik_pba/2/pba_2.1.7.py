@@ -1,28 +1,26 @@
-def is_parent(child, ls=[]):
-    ls = ls + [child]
-    if child in except_list:
-        return ls
-    if child in errors and errors[child]:
-        for i in errors[child]:
-            f = is_parent(i)
-            ls.extend(f)
-    return ls
+def is_parent(child, path=None):
+    if path is None:
+        path = set()
+    path.add(child)
+    if child in data and data[child]:
+        for node in data[child]:
+            if node not in path:
+                path |= is_parent(node)
+    return path
 
 
-errors = {}
+data = {}
 for _ in range(int(input())):
     lst = input().split()
-    errors[lst[0]] = errors.get(lst[0], lst[2:])
-except_list = []
+    data[lst[0]] = lst[2:]
+
+except_set = set()
 for _ in range(int(input())):
     exception = input()
-    if not except_list:
-        except_list.append(exception)
-    elif except_list:
-        res = is_parent(exception)
-        for e in except_list:
-            if e in res:
-                print(exception)
-                break
-        else:
-            except_list.append(exception)
+    parents = is_parent(exception)
+    for sample in except_set:
+        if sample in parents:
+            print(exception)
+            break
+    else:
+        except_set.add(exception)
