@@ -33,25 +33,15 @@ print(d)
 def path(data, i, j, stack=None):
     if stack is None:
         stack = []
-    # stack.append(data[i][j])
-    if not data[i+1:i+2]:
+    stack.append(data[i][j])
+    if data[i+1:i+2]:
+        a, b, c = data[i][j], data[i+1][j], data[i+1][j+1]
+        for e in range(2):
+            k = path(data, i+1, j+e)
+            if k:
+                stack.append(k)
+    else:
         return stack
-    paths = []
-    # if data[i+1:i+2]:
-    # i += 1
-    for b in range(2):
-        stack.append(data[i][j])
-        i += 1
-        a = data[i][j+b]
-        stack.append(a)
-        k = path(data, i, j+b)
-        if k:
-            stack.extend(k)
-            # return paths
-        else:
-            return stack
-    # return paths + [stack]
-    return paths + [stack]
 
 
 def way(data, i=0, j=0, start=None):
