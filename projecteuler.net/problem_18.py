@@ -30,18 +30,18 @@ d = [[int(e) for e in i.split()] for i in m.strip().split('\n')]
 print(d)
 
 
-def path(data, i, j, stack=None):
-    if stack is None:
-        stack = []
-    stack.append(data[i][j])
-    if data[i+1:i+2]:
-        a, b, c = data[i][j], data[i+1][j], data[i+1][j+1]
-        for e in range(2):
-            k = path(data, i+1, j+e)
-            if k:
-                stack.append(k)
-    else:
-        return stack
+def path(data, i, j, path=None):
+    if path is None:
+        path = []
+    q = [data[i][j]]
+    # while q:
+    #     v = q.pop()
+    #     path = path + [v]
+    #     if data[i+1:i+2]:
+    #         i += 1
+    #         q += [data[i][j]] + [data[i][j+1]]
+    #         j += 1
+    # return path
 
 
 def way(data, i=0, j=0, start=None):
