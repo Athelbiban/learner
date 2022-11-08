@@ -4,7 +4,6 @@ m = """
 2 4 6
 8 5 9 3
 """
-
 n = """
 75
 95 64
@@ -23,9 +22,46 @@ n = """
 04 62 98 27 23 09 70 98 73 93 38 53 60 04 23
 """
 
-res = 0
+# res = 0
 # for i in m.strip().split('\n'):
 #     res += max(map(int, i.split()))
 # print(res)
-lst = [[int(e) for e in i.split()] for i in m.strip().split('\n')]
-print(lst)
+d = [[int(e) for e in i.split()] for i in m.strip().split('\n')]
+print(d)
+
+
+def path(data, i, j, stack=None):
+    if stack is None:
+        stack = []
+    # stack.append(data[i][j])
+    if not data[i+1:i+2]:
+        return stack
+    paths = []
+    # if data[i+1:i+2]:
+    # i += 1
+    for b in range(2):
+        stack.append(data[i][j])
+        i += 1
+        a = data[i][j+b]
+        stack.append(a)
+        k = path(data, i, j+b)
+        if k:
+            stack.extend(k)
+            # return paths
+        else:
+            return stack
+    # return paths + [stack]
+    return paths + [stack]
+
+
+def way(data, i=0, j=0, start=None):
+    if start is None:
+        start = data[i][j]
+    # while i < len(data):
+    #     res = start
+
+    return path(data, i, j)
+
+
+if __name__ == '__main__':
+    print(way(d))
