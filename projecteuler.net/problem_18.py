@@ -1,3 +1,6 @@
+import time
+
+st = time.time()
 m = """
 3
 7 4
@@ -21,37 +24,45 @@ n = """
 63 66 04 68 89 53 67 30 73 16 69 87 40 31
 04 62 98 27 23 09 70 98 73 93 38 53 60 04 23
 """
-
-# res = 0
-# for i in m.strip().split('\n'):
-#     res += max(map(int, i.split()))
-# print(res)
-d = [[int(e) for e in i.split()] for i in m.strip().split('\n')]
-print(d)
-
-
-def path(data, i, j, path=None):
-    if path is None:
-        path = []
-    q = [data[i][j]]
-    # while q:
-    #     v = q.pop()
-    #     path = path + [v]
-    #     if data[i+1:i+2]:
-    #         i += 1
-    #         q += [data[i][j]] + [data[i][j+1]]
-    #         j += 1
-    # return path
+t = [[e for e in i.split()] for i in n.strip().split('\n')]
+d = {}
+for i, _ in enumerate(t):
+    for j, _ in enumerate(t[i]):
+        if t[i+1:i+2]:
+            d[f'{str(i)}{str(j)}-{str(t[i][j])}'] = f'{str(i+1)}{str(j)}-{str(t[i+1][j])}', \
+                                                    f'{str(i+1)}{str(j+1)}-{str(t[i+1][j+1])}'
+        else:
+            d[f'{str(i)}{str(j)}-{str(t[i][j])}'] = tuple()
+start = f'00-{t[0][0]}'
+len_t1 = len(t) - 1
+end = [f'{str(len_t1)}{str(k)}-{str(t[len_t1][k])}' for k in range(len(t[-1]))]
 
 
-def way(data, i=0, j=0, start=None):
-    if start is None:
-        start = data[i][j]
-    # while i < len(data):
-    #     res = start
+def dfs_paths(graph, start, goal):
+    stack = [(start, [start])]
+    while stack:
+        (vertex, path) = stack.pop()
+        for next in graph[vertex]:
+            if next == goal:
+                yield path + [next]
+            else:
+                stack.append((next, path + [next]))
 
-    return path(data, i, j)
+
+def main():
+    max_way = []
+    max_cost = 0
+    for i in end:
+        for e in dfs_paths(d, start, i):
+            w1 = 0
+            for u in e:
+                w1 += int(u.split('-')[-1])
+            if w1 > max_cost:
+                max_cost = w1
+                max_way = e
+    return max_cost, max_way
 
 
 if __name__ == '__main__':
-    print(way(d))
+    print(main())
+print(time.time() - st)
