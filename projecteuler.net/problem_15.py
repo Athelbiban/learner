@@ -1,7 +1,7 @@
 import time
 
 
-def ways(graph, goal, start='00'):
+def ways(graph, goal, start='0-0'):
     stack = [(start, [start])]
     count = 0
     while stack:
@@ -16,19 +16,19 @@ def ways(graph, goal, start='00'):
 
 
 def main():
-    n, m = 9, 9
+    n, m = 12, 12
     d = {}
     for i in range(n+1):
         for j in range(m+1):
             if i <= n-1 and j <= m-1:
-                d[f'{str(i)}{str(j)}'] = f'{str(i)}{str(j + 1)}', f'{str(i + 1)}{str(j)}'
+                d[f'{str(i)}-{str(j)}'] = f'{str(i)}-{str(j + 1)}', f'{str(i + 1)}-{str(j)}'
             elif i <= n-1 and j > m-1:
-                d[f'{str(i)}{str(j)}'] = f'{str(i + 1)}{str(j)}',
+                d[f'{str(i)}-{str(j)}'] = f'{str(i + 1)}-{str(j)}',
             elif i > n-1 and j <= m-1:
-                d[f'{str(i)}{str(j)}'] = f'{str(i)}{str(j + 1)}',
+                d[f'{str(i)}-{str(j)}'] = f'{str(i)}-{str(j + 1)}',
             else:
-                d[f'{str(i)}{str(j)}'] = ()
-    return ways(d, f'{str(n)}{str(m)}')
+                d[f'{str(i)}-{str(j)}'] = ()
+    return ways(d, f'{str(n)}-{str(m)}')
 
 
 if __name__ == '__main__':
