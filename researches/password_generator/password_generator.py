@@ -18,8 +18,9 @@ if __name__ == '__main__':
     low = tuple(set(string.ascii_lowercase) - set('lo'))
     up = tuple(set(string.ascii_uppercase) - set('IO'))
     dig = tuple(string.digits)
-    signs = tuple("!#$%&'()*+,-./:;<=>?@[]^_`{|}~\"")
+    # signs_full = tuple("!#$%&'()*+,-./:;<=>?@[]^_`{|}~\"")
+    signs_cut = tuple("!,-.:;?_")
     low_up_dig = low + up + dig
-    all_char = low + up + dig + signs
+    all_char = low + up + dig + signs_cut
     print(*generate_passwords(int(input('Сколько паролей генерировать: ')),
                               int(input('Количество символов в пароле: '))), sep='\n')
