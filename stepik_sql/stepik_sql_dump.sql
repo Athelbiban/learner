@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.31, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.32, for Linux (x86_64)
 --
 -- Host: localhost    Database: stepik_sql
 -- ------------------------------------------------------
--- Server version	8.0.31
+-- Server version	8.0.32-0buntu0.22.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -43,6 +43,35 @@ INSERT INTO `book` VALUES (1,'Мастер и Маргарита','Булгак�
 UNLOCK TABLES;
 
 --
+-- Table structure for table `fine`
+--
+
+DROP TABLE IF EXISTS `fine`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `fine` (
+  `fine_id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(30) DEFAULT NULL,
+  `number_plate` varchar(6) DEFAULT NULL,
+  `violation` varchar(50) DEFAULT NULL,
+  `sum_fine` decimal(8,2) DEFAULT NULL,
+  `date_violation` date DEFAULT NULL,
+  `date_payment` date DEFAULT NULL,
+  PRIMARY KEY (`fine_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `fine`
+--
+
+LOCK TABLES `fine` WRITE;
+/*!40000 ALTER TABLE `fine` DISABLE KEYS */;
+INSERT INTO `fine` VALUES (1,'Баранов П.Е.','Р523ВТ','Превышение скорости(от 40 до 60)',500.00,'2020-01-12','2020-01-17'),(2,'Абрамова К.А.','О111АВ','Проезд на запрещающий сигнал',1000.00,'2020-01-14','2020-02-27'),(3,'Яковлев Г.Р.','Т330ТТ','Превышение скорости(от 20 до 40)',500.00,'2020-01-23','2020-02-23'),(4,'Яковлев Г.Р.','М701АА','Превышение скорости(от 20 до 40)',NULL,'2020-01-12',NULL),(5,'Колесов С.П.','К892АХ','Превышение скорости(от 20 до 40)',NULL,'2020-02-01',NULL),(6,'Баранов П.Е.','Р523ВТ','Превышение скорости(от 40 до 60)',NULL,'2020-02-14',NULL),(7,'Абрамова К.А.','О111АВ','Проезд на запрещающий сигнал',NULL,'2020-02-23',NULL),(8,'Яковлев Г.Р.','Т330ТТ','Проезд на запрещающий сигнал',NULL,'2020-03-03',NULL);
+/*!40000 ALTER TABLE `fine` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `supply`
 --
 
@@ -78,8 +107,8 @@ DROP TABLE IF EXISTS `trip`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `trip` (
   `trip_id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `city` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `city` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `per_diem` decimal(8,2) DEFAULT NULL,
   `date_first` date DEFAULT NULL,
   `date_last` date DEFAULT NULL,
@@ -106,4 +135,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-23 15:45:22
+-- Dump completed on 2023-01-25 20:28:54
