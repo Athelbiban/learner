@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.31, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.32, for Linux (x86_64)
 --
 -- Host: localhost    Database: stepik_sql
 -- ------------------------------------------------------
--- Server version	8.0.31
+-- Server version	8.0.32-0buntu0.22.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -14,6 +14,32 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `back_payment`
+--
+
+DROP TABLE IF EXISTS `back_payment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `back_payment` (
+  `name` varchar(30) DEFAULT NULL,
+  `number_plate` varchar(6) DEFAULT NULL,
+  `violation` varchar(50) DEFAULT NULL,
+  `sum_fine` decimal(8,2) DEFAULT NULL,
+  `date_violation` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `back_payment`
+--
+
+LOCK TABLES `back_payment` WRITE;
+/*!40000 ALTER TABLE `back_payment` DISABLE KEYS */;
+INSERT INTO `back_payment` VALUES ('Колесов С.П.','К892АХ','Превышение скорости(от 20 до 40)',500.00,'2020-02-01'),('Абрамова К.А.','О111АВ','Проезд на запрещающий сигнал',2000.00,'2020-02-23');
+/*!40000 ALTER TABLE `back_payment` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `book`
@@ -67,7 +93,7 @@ CREATE TABLE `fine` (
 
 LOCK TABLES `fine` WRITE;
 /*!40000 ALTER TABLE `fine` DISABLE KEYS */;
-INSERT INTO `fine` VALUES (1,'Баранов П.Е.','Р523ВТ','Превышение скорости(от 40 до 60)',500.00,'2020-01-12','2020-01-17'),(2,'Абрамова К.А.','О111АВ','Проезд на запрещающий сигнал',1000.00,'2020-01-14','2020-02-27'),(3,'Яковлев Г.Р.','Т330ТТ','Превышение скорости(от 20 до 40)',500.00,'2020-01-23','2020-02-23'),(4,'Яковлев Г.Р.','М701АА','Превышение скорости(от 20 до 40)',500.00,'2020-01-12',NULL),(5,'Колесов С.П.','К892АХ','Превышение скорости(от 20 до 40)',500.00,'2020-02-01',NULL),(6,'Баранов П.Е.','Р523ВТ','Превышение скорости(от 40 до 60)',2000.00,'2020-02-14',NULL),(7,'Абрамова К.А.','О111АВ','Проезд на запрещающий сигнал',2000.00,'2020-02-23',NULL),(8,'Яковлев Г.Р.','Т330ТТ','Проезд на запрещающий сигнал',1000.00,'2020-03-03',NULL);
+INSERT INTO `fine` VALUES (1,'Баранов П.Е.','Р523ВТ','Превышение скорости(от 40 до 60)',500.00,'2020-01-12','2020-01-17'),(2,'Абрамова К.А.','О111АВ','Проезд на запрещающий сигнал',1000.00,'2020-01-14','2020-02-27'),(3,'Яковлев Г.Р.','Т330ТТ','Превышение скорости(от 20 до 40)',500.00,'2020-01-23','2020-02-23'),(4,'Яковлев Г.Р.','М701АА','Превышение скорости(от 20 до 40)',250.00,'2020-01-12','2020-01-22'),(5,'Колесов С.П.','К892АХ','Превышение скорости(от 20 до 40)',500.00,'2020-02-01',NULL),(6,'Баранов П.Е.','Р523ВТ','Превышение скорости(от 40 до 60)',2000.00,'2020-02-14','2020-03-06'),(7,'Абрамова К.А.','О111АВ','Проезд на запрещающий сигнал',2000.00,'2020-02-23',NULL),(8,'Яковлев Г.Р.','Т330ТТ','Проезд на запрещающий сигнал',500.00,'2020-03-03','2020-03-23');
 /*!40000 ALTER TABLE `fine` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -80,9 +106,9 @@ DROP TABLE IF EXISTS `payment`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `payment` (
   `payment_id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `number_plate` varchar(6) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `violation` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `number_plate` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `violation` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `date_violation` date DEFAULT NULL,
   `date_payment` date DEFAULT NULL,
   PRIMARY KEY (`payment_id`)
@@ -188,4 +214,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-27 14:13:17
+-- Dump completed on 2023-01-28 14:16:43
