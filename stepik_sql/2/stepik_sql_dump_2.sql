@@ -35,7 +35,7 @@ CREATE TABLE `author` (
 
 LOCK TABLES `author` WRITE;
 /*!40000 ALTER TABLE `author` DISABLE KEYS */;
-INSERT INTO `author` VALUES (5,'Булгаков М.А.'),(6,'Достоевский Ф.М.'),(7,'Есенин С.А.'),(8,'Пастернак Б.Л.');
+INSERT INTO `author` VALUES (1,'Булгаков М.А.'),(2,'Достоевский Ф.М.'),(3,'Есенин С.А.'),(4,'Пастернак Б.Л.');
 /*!40000 ALTER TABLE `author` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -75,11 +75,16 @@ DROP TABLE IF EXISTS `book`;
 CREATE TABLE `book` (
   `book_id` int NOT NULL AUTO_INCREMENT,
   `title` varchar(50) DEFAULT NULL,
-  `name_author` varchar(30) DEFAULT NULL,
+  `author_id` int NOT NULL,
+  `genre_id` int DEFAULT NULL,
   `price` decimal(8,2) DEFAULT NULL,
   `amount` int DEFAULT NULL,
-  PRIMARY KEY (`book_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`book_id`),
+  KEY `author_id` (`author_id`),
+  KEY `genre_id` (`genre_id`),
+  CONSTRAINT `book_ibfk_1` FOREIGN KEY (`author_id`) REFERENCES `author` (`author_id`) ON DELETE CASCADE,
+  CONSTRAINT `book_ibfk_2` FOREIGN KEY (`genre_id`) REFERENCES `genre` (`genre_id`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -88,7 +93,7 @@ CREATE TABLE `book` (
 
 LOCK TABLES `book` WRITE;
 /*!40000 ALTER TABLE `book` DISABLE KEYS */;
-INSERT INTO `book` VALUES (1,'Мастер и Маргарита','Булгаков М.А.',670.99,3),(2,'Белая гвардия','Булгаков М.А.',540.50,5),(3,'Идиот','Достоевский Ф.М.',460.00,10),(4,'Братья Карамазовы','Достоевский Ф.М.',799.01,2),(5,'Стихотворения и поэмы','Есенин С.А.',650.00,15);
+INSERT INTO `book` VALUES (1,'Мастер и Маргарита',1,1,670.99,3),(2,'Белая гвардия',1,1,540.50,5),(3,'Идиот',2,1,460.00,10),(4,'Братья Карамазовы',2,1,799.01,3),(5,'Игрок',2,1,480.50,10),(6,'Стихотворения и поэмы',3,2,650.00,15),(7,'Черный человек',3,2,570.20,6),(8,'Лирика',4,2,518.99,2);
 /*!40000 ALTER TABLE `book` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -119,6 +124,30 @@ LOCK TABLES `fine` WRITE;
 /*!40000 ALTER TABLE `fine` DISABLE KEYS */;
 INSERT INTO `fine` VALUES (5,'Колесов С.П.','К892АХ','Превышение скорости(от 20 до 40)',500.00,'2020-02-01',NULL),(6,'Баранов П.Е.','Р523ВТ','Превышение скорости(от 40 до 60)',2000.00,'2020-02-14','2020-03-06'),(7,'Абрамова К.А.','О111АВ','Проезд на запрещающий сигнал',2000.00,'2020-02-23',NULL),(8,'Яковлев Г.Р.','Т330ТТ','Проезд на запрещающий сигнал',500.00,'2020-03-03','2020-03-23');
 /*!40000 ALTER TABLE `fine` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `genre`
+--
+
+DROP TABLE IF EXISTS `genre`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `genre` (
+  `genre_id` int NOT NULL AUTO_INCREMENT,
+  `name_genre` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`genre_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `genre`
+--
+
+LOCK TABLES `genre` WRITE;
+/*!40000 ALTER TABLE `genre` DISABLE KEYS */;
+INSERT INTO `genre` VALUES (1,'Роман'),(2,'Поэзия');
+/*!40000 ALTER TABLE `genre` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -238,4 +267,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-28 19:36:05
+-- Dump completed on 2023-01-29 20:33:41
