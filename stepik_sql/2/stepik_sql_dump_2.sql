@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `author`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `author` (
   `author_id` int NOT NULL AUTO_INCREMENT,
-  `name_author` varchar(50) DEFAULT NULL,
+  `name_author` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`author_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -35,7 +35,7 @@ CREATE TABLE `author` (
 
 LOCK TABLES `author` WRITE;
 /*!40000 ALTER TABLE `author` DISABLE KEYS */;
-INSERT INTO `author` VALUES (1,'Булгаков М.А.'),(2,'Достоевский Ф.М.'),(3,'Есенин С.А.'),(4,'Пастернак Б.Л.'),(9,'Лермонтов М.Ю.');
+INSERT INTO `author` VALUES (1,'Булгаков М.А.'),(2,'Достоевский Ф.М.'),(3,'Есенин С.А.'),(4,'Пастернак Б.Л.'),(5,'Лермонтов М.Ю.');
 /*!40000 ALTER TABLE `author` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -47,9 +47,9 @@ DROP TABLE IF EXISTS `back_payment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `back_payment` (
-  `name` varchar(30) DEFAULT NULL,
-  `number_plate` varchar(6) DEFAULT NULL,
-  `violation` varchar(50) DEFAULT NULL,
+  `name` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `number_plate` varchar(6) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `violation` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `sum_fine` decimal(8,2) DEFAULT NULL,
   `date_violation` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -74,7 +74,7 @@ DROP TABLE IF EXISTS `book`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `book` (
   `book_id` int NOT NULL AUTO_INCREMENT,
-  `title` varchar(50) DEFAULT NULL,
+  `title` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `author_id` int NOT NULL,
   `genre_id` int DEFAULT NULL,
   `price` decimal(8,2) DEFAULT NULL,
@@ -106,7 +106,7 @@ DROP TABLE IF EXISTS `city`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `city` (
   `city_id` int NOT NULL AUTO_INCREMENT,
-  `name_city` varchar(30) DEFAULT NULL,
+  `name_city` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`city_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -130,9 +130,9 @@ DROP TABLE IF EXISTS `fine`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `fine` (
   `fine_id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(30) DEFAULT NULL,
-  `number_plate` varchar(6) DEFAULT NULL,
-  `violation` varchar(50) DEFAULT NULL,
+  `name` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `number_plate` varchar(6) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `violation` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `sum_fine` decimal(8,2) DEFAULT NULL,
   `date_violation` date DEFAULT NULL,
   `date_payment` date DEFAULT NULL,
@@ -159,7 +159,7 @@ DROP TABLE IF EXISTS `genre`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `genre` (
   `genre_id` int NOT NULL AUTO_INCREMENT,
-  `name_genre` varchar(30) DEFAULT NULL,
+  `name_genre` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`genre_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -211,12 +211,12 @@ DROP TABLE IF EXISTS `supply`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `supply` (
   `supply_id` int NOT NULL AUTO_INCREMENT,
-  `title` varchar(50) DEFAULT NULL,
-  `author` varchar(30) DEFAULT NULL,
+  `title` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `author` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `price` decimal(8,2) DEFAULT NULL,
   `amount` int DEFAULT NULL,
   PRIMARY KEY (`supply_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -225,7 +225,7 @@ CREATE TABLE `supply` (
 
 LOCK TABLES `supply` WRITE;
 /*!40000 ALTER TABLE `supply` DISABLE KEYS */;
-INSERT INTO `supply` VALUES (1,'Лирика','Пастернак Б.Л.',518.99,2),(3,'Белая гвардия','Булгаков М.А.',540.50,7);
+INSERT INTO `supply` VALUES (1,'Доктор Живаго','Пастернак Б.Л.',380.80,4),(2,'Черный человек','Есенин С.А.',570.20,6),(3,'Белая гвардия','Булгаков М.А.',540.50,7),(4,'Идиот','Достаевский Ф.М.',360.80,3),(5,'Стихотворения и поэмы','Лермонтов М.Ю.',255.90,4),(6,'Остров сокровищ','Стивенсон Р.Л.',599.99,5);
 /*!40000 ALTER TABLE `supply` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -291,4 +291,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-30 21:20:30
+-- Dump completed on 2023-02-02 20:59:40
