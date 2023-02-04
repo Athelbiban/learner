@@ -26,7 +26,7 @@ CREATE TABLE `author` (
   `author_id` int NOT NULL AUTO_INCREMENT,
   `name_author` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`author_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -84,7 +84,7 @@ CREATE TABLE `book` (
   KEY `genre_id` (`genre_id`),
   CONSTRAINT `book_ibfk_1` FOREIGN KEY (`author_id`) REFERENCES `author` (`author_id`) ON DELETE CASCADE,
   CONSTRAINT `book_ibfk_2` FOREIGN KEY (`genre_id`) REFERENCES `genre` (`genre_id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,7 +93,7 @@ CREATE TABLE `book` (
 
 LOCK TABLES `book` WRITE;
 /*!40000 ALTER TABLE `book` DISABLE KEYS */;
-INSERT INTO `book` VALUES (1,'Мастер и Маргарита',1,1,670.99,3),(2,'Белая гвардия',1,1,540.50,12),(3,'Идиот',2,1,460.00,10),(4,'Братья Карамазовы',2,1,799.01,3),(5,'Игрок',2,1,480.50,10),(6,'Стихотворения и поэмы',3,2,650.00,15),(7,'Черный человек',3,2,570.20,6),(8,'Лирика',4,2,518.99,2);
+INSERT INTO `book` VALUES (1,'Мастер и Маргарита',1,1,670.99,3),(2,'Белая гвардия',1,1,540.50,12),(3,'Идиот',2,1,437.11,10),(4,'Братья Карамазовы',2,1,799.01,3),(5,'Игрок',2,1,480.50,10),(6,'Стихотворения и поэмы',3,2,650.00,15),(7,'Черный человек',3,2,570.20,6),(8,'Лирика',4,2,518.99,2),(9,'Доктор Живаго',4,1,380.80,4),(10,'Стихотворения и поэмы',5,2,255.90,4),(11,'Остров сокровищ',6,3,599.99,5);
 /*!40000 ALTER TABLE `book` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -225,7 +225,7 @@ CREATE TABLE `supply` (
 
 LOCK TABLES `supply` WRITE;
 /*!40000 ALTER TABLE `supply` DISABLE KEYS */;
-INSERT INTO `supply` VALUES (1,'Доктор Живаго','Пастернак Б.Л.',380.80,4),(2,'Черный человек','Есенин С.А.',570.20,12),(3,'Белая гвардия','Булгаков М.А.',540.50,7),(4,'Идиот','Достоевский Ф.М.',360.80,3),(5,'Стихотворения и поэмы','Лермонтов М.Ю.',255.90,4),(6,'Остров сокровищ','Стивенсон Р.Л.',599.99,5);
+INSERT INTO `supply` VALUES (1,'Доктор Живаго','Пастернак Б.Л.',380.80,4),(2,'Черный человек','Есенин С.А.',570.20,0),(3,'Белая гвардия','Булгаков М.А.',540.50,0),(4,'Идиот','Достоевский Ф.М.',360.80,0),(5,'Стихотворения и поэмы','Лермонтов М.Ю.',255.90,4),(6,'Остров сокровищ','Стивенсон Р.Л.',599.99,5);
 /*!40000 ALTER TABLE `supply` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -291,4 +291,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-02-03 19:54:27
+-- Dump completed on 2023-02-04 21:16:54
