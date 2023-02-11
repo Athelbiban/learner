@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.31, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.32, for Linux (x86_64)
 --
 -- Host: localhost    Database: stepik_bookstore
 -- ------------------------------------------------------
--- Server version	8.0.31
+-- Server version	8.0.32-0ubuntu0.22.04.2
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `author`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `author` (
   `author_id` int NOT NULL AUTO_INCREMENT,
-  `name_author` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name_author` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`author_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -48,7 +48,7 @@ DROP TABLE IF EXISTS `book`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `book` (
   `book_id` int NOT NULL AUTO_INCREMENT,
-  `title` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `author_id` int NOT NULL,
   `genre_id` int DEFAULT NULL,
   `price` decimal(8,2) DEFAULT NULL,
@@ -80,12 +80,12 @@ DROP TABLE IF EXISTS `buy`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `buy` (
   `buy_id` int NOT NULL AUTO_INCREMENT,
-  `buy_description` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `buy_description` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `client_id` int DEFAULT NULL,
   PRIMARY KEY (`buy_id`),
   KEY `client_id` (`client_id`),
   CONSTRAINT `buy_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `client` (`client_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -94,7 +94,7 @@ CREATE TABLE `buy` (
 
 LOCK TABLES `buy` WRITE;
 /*!40000 ALTER TABLE `buy` DISABLE KEYS */;
-INSERT INTO `buy` VALUES (1,'Доставка только вечером',1),(2,NULL,3),(3,'Упаковать каждую книгу по отдельности',2),(4,NULL,1);
+INSERT INTO `buy` VALUES (1,'Доставка только вечером',1),(2,NULL,3),(3,'Упаковать каждую книгу по отдельности',2),(4,NULL,1),(5,'Связаться со мной по вопросу доставки',5);
 /*!40000 ALTER TABLE `buy` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -144,7 +144,7 @@ CREATE TABLE `buy_book` (
   KEY `book_id` (`book_id`),
   CONSTRAINT `buy_book_ibfk_1` FOREIGN KEY (`buy_id`) REFERENCES `buy` (`buy_id`),
   CONSTRAINT `buy_book_ibfk_2` FOREIGN KEY (`book_id`) REFERENCES `book` (`book_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -153,7 +153,7 @@ CREATE TABLE `buy_book` (
 
 LOCK TABLES `buy_book` WRITE;
 /*!40000 ALTER TABLE `buy_book` DISABLE KEYS */;
-INSERT INTO `buy_book` VALUES (1,1,1,1),(2,1,7,2),(3,1,3,1),(4,2,8,2),(5,3,3,2),(6,3,2,1),(7,3,1,1),(8,4,5,1);
+INSERT INTO `buy_book` VALUES (1,1,1,1),(2,1,7,2),(3,1,3,1),(4,2,8,2),(5,3,3,2),(6,3,2,1),(7,3,1,1),(8,4,5,1),(9,5,8,2),(10,5,2,1);
 /*!40000 ALTER TABLE `buy_book` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -197,7 +197,7 @@ DROP TABLE IF EXISTS `city`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `city` (
   `city_id` int NOT NULL AUTO_INCREMENT,
-  `name_city` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name_city` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `days_delivery` int DEFAULT NULL,
   PRIMARY KEY (`city_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -222,13 +222,13 @@ DROP TABLE IF EXISTS `client`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `client` (
   `client_id` int NOT NULL AUTO_INCREMENT,
-  `name_client` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name_client` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `city_id` int DEFAULT NULL,
-  `email` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`client_id`),
   KEY `city_id` (`city_id`),
   CONSTRAINT `client_ibfk_1` FOREIGN KEY (`city_id`) REFERENCES `city` (`city_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -237,7 +237,7 @@ CREATE TABLE `client` (
 
 LOCK TABLES `client` WRITE;
 /*!40000 ALTER TABLE `client` DISABLE KEYS */;
-INSERT INTO `client` VALUES (1,'Баранов Павел',3,'baranov@test'),(2,'Абрамова Катя',1,'abramova@test'),(3,'Семенонов Иван',2,'semenov@test'),(4,'Яковлева Галина',1,'yakovleva@test');
+INSERT INTO `client` VALUES (1,'Баранов Павел',3,'baranov@test'),(2,'Абрамова Катя',1,'abramova@test'),(3,'Семенонов Иван',2,'semenov@test'),(4,'Яковлева Галина',1,'yakovleva@test'),(5,'Попов Илья',1,'popov@test');
 /*!40000 ALTER TABLE `client` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -250,7 +250,7 @@ DROP TABLE IF EXISTS `genre`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `genre` (
   `genre_id` int NOT NULL AUTO_INCREMENT,
-  `name_genre` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name_genre` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`genre_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -274,7 +274,7 @@ DROP TABLE IF EXISTS `step`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `step` (
   `step_id` int NOT NULL AUTO_INCREMENT,
-  `name_step` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name_step` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`step_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -298,4 +298,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-02-10 12:39:19
+-- Dump completed on 2023-02-11 19:02:49
