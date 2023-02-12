@@ -67,7 +67,7 @@ CREATE TABLE `book` (
 
 LOCK TABLES `book` WRITE;
 /*!40000 ALTER TABLE `book` DISABLE KEYS */;
-INSERT INTO `book` VALUES (1,'Мастер и Маргарита',1,1,670.99,3),(2,'Белая гвардия',1,1,540.50,5),(3,'Идиот',2,1,460.00,10),(4,'Братья Карамазовы',2,1,799.01,2),(5,'Игрок',2,1,480.50,10),(6,'Стихотворения и поэмы',3,2,650.00,15),(7,'Черный человек',3,2,570.20,6),(8,'Лирика',4,2,518.99,2);
+INSERT INTO `book` VALUES (1,'Мастер и Маргарита',1,1,670.99,3),(2,'Белая гвардия',1,1,540.50,4),(3,'Идиот',2,1,460.00,10),(4,'Братья Карамазовы',2,1,799.01,2),(5,'Игрок',2,1,480.50,10),(6,'Стихотворения и поэмы',3,2,650.00,15),(7,'Черный человек',3,2,570.20,6),(8,'Лирика',4,2,518.99,0);
 /*!40000 ALTER TABLE `book` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -155,6 +155,30 @@ LOCK TABLES `buy_book` WRITE;
 /*!40000 ALTER TABLE `buy_book` DISABLE KEYS */;
 INSERT INTO `buy_book` VALUES (1,1,1,1),(2,1,7,2),(3,1,3,1),(4,2,8,2),(5,3,3,2),(6,3,2,1),(7,3,1,1),(8,4,5,1),(9,5,8,2),(10,5,2,1);
 /*!40000 ALTER TABLE `buy_book` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `buy_pay`
+--
+
+DROP TABLE IF EXISTS `buy_pay`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `buy_pay` (
+  `buy_id` int DEFAULT NULL,
+  `Количество` decimal(32,0) DEFAULT NULL,
+  `Итого` decimal(40,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `buy_pay`
+--
+
+LOCK TABLES `buy_pay` WRITE;
+/*!40000 ALTER TABLE `buy_pay` DISABLE KEYS */;
+INSERT INTO `buy_pay` VALUES (5,3,1578.48);
+/*!40000 ALTER TABLE `buy_pay` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -298,4 +322,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-02-11 19:02:49
+-- Dump completed on 2023-02-12 18:05:43
