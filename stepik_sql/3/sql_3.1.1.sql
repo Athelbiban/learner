@@ -43,6 +43,10 @@ CREATE TABLE testing (
     question_id INT,
     answer_id INT,
     FOREIGN KEY (attempt_id) REFERENCES attempt (attempt_id)
+                     ON DELETE CASCADE,
+    FOREIGN KEY (question_id) REFERENCES question (question_id)
+                     ON DELETE CASCADE,
+    FOREIGN KEY (answer_id) REFERENCES answer (answer_id)
                      ON DELETE CASCADE
 ) COLLATE utf8mb4_unicode_ci;
 
