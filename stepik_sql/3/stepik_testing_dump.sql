@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `answer`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `answer` (
   `answer_id` int NOT NULL AUTO_INCREMENT,
-  `answer_name` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name_answer` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `question_id` int DEFAULT NULL,
   `is_correct` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`answer_id`),
@@ -54,7 +54,7 @@ CREATE TABLE `attempt` (
   `attempt_id` int NOT NULL AUTO_INCREMENT,
   `student_id` int DEFAULT NULL,
   `subject_id` int DEFAULT NULL,
-  `attempt_date` date DEFAULT NULL,
+  `date_attempt` date DEFAULT NULL,
   `result` int DEFAULT NULL,
   PRIMARY KEY (`attempt_id`),
   KEY `student_id` (`student_id`),
@@ -83,7 +83,7 @@ DROP TABLE IF EXISTS `question`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `question` (
   `question_id` int NOT NULL AUTO_INCREMENT,
-  `question_name` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name_question` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `subject_id` int DEFAULT NULL,
   PRIMARY KEY (`question_id`),
   KEY `subject_id` (`subject_id`),
@@ -110,7 +110,7 @@ DROP TABLE IF EXISTS `student`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `student` (
   `student_id` int NOT NULL AUTO_INCREMENT,
-  `student_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name_student` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`student_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -134,7 +134,7 @@ DROP TABLE IF EXISTS `subject`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `subject` (
   `subject_id` int NOT NULL AUTO_INCREMENT,
-  `subject_name` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name_subject` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`subject_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
