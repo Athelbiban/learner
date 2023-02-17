@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `answer`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `answer` (
   `answer_id` int NOT NULL AUTO_INCREMENT,
-  `name_answer` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name_answer` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `question_id` int DEFAULT NULL,
   `is_correct` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`answer_id`),
@@ -61,7 +61,7 @@ CREATE TABLE `attempt` (
   KEY `subject_id` (`subject_id`),
   CONSTRAINT `attempt_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`student_id`) ON DELETE CASCADE,
   CONSTRAINT `attempt_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`subject_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,7 +70,7 @@ CREATE TABLE `attempt` (
 
 LOCK TABLES `attempt` WRITE;
 /*!40000 ALTER TABLE `attempt` DISABLE KEYS */;
-INSERT INTO `attempt` VALUES (1,1,2,'2020-03-23',67),(2,3,1,'2020-03-23',100),(3,4,2,'2020-03-26',0),(4,1,1,'2020-04-15',33),(5,3,1,'2020-04-15',67),(6,4,2,'2020-04-21',100),(7,3,1,'2020-05-17',33);
+INSERT INTO `attempt` VALUES (1,1,2,'2020-03-23',67),(2,3,1,'2020-03-23',100),(3,4,2,'2020-03-26',0),(4,1,1,'2020-04-15',33),(5,3,1,'2020-04-15',67),(6,4,2,'2020-04-21',100),(7,3,1,'2020-05-17',33),(8,1,2,'2023-02-17',NULL);
 /*!40000 ALTER TABLE `attempt` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -83,7 +83,7 @@ DROP TABLE IF EXISTS `question`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `question` (
   `question_id` int NOT NULL AUTO_INCREMENT,
-  `name_question` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name_question` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `subject_id` int DEFAULT NULL,
   PRIMARY KEY (`question_id`),
   KEY `subject_id` (`subject_id`),
@@ -110,7 +110,7 @@ DROP TABLE IF EXISTS `student`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `student` (
   `student_id` int NOT NULL AUTO_INCREMENT,
-  `name_student` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name_student` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`student_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -134,7 +134,7 @@ DROP TABLE IF EXISTS `subject`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `subject` (
   `subject_id` int NOT NULL AUTO_INCREMENT,
-  `name_subject` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name_subject` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`subject_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -168,7 +168,7 @@ CREATE TABLE `testing` (
   CONSTRAINT `testing_ibfk_1` FOREIGN KEY (`attempt_id`) REFERENCES `attempt` (`attempt_id`) ON DELETE CASCADE,
   CONSTRAINT `testing_ibfk_2` FOREIGN KEY (`question_id`) REFERENCES `question` (`question_id`) ON DELETE CASCADE,
   CONSTRAINT `testing_ibfk_3` FOREIGN KEY (`answer_id`) REFERENCES `answer` (`answer_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -177,7 +177,7 @@ CREATE TABLE `testing` (
 
 LOCK TABLES `testing` WRITE;
 /*!40000 ALTER TABLE `testing` DISABLE KEYS */;
-INSERT INTO `testing` VALUES (1,1,9,25),(2,1,7,19),(3,1,6,17),(4,2,3,9),(5,2,1,2),(6,2,4,11),(7,3,6,18),(8,3,8,24),(9,3,9,28),(10,4,1,2),(11,4,5,16),(12,4,3,10),(13,5,2,6),(14,5,1,2),(15,5,4,12),(16,6,6,17),(17,6,8,22),(18,6,7,21),(19,7,1,3),(20,7,4,11),(21,7,5,16);
+INSERT INTO `testing` VALUES (1,1,9,25),(2,1,7,19),(3,1,6,17),(4,2,3,9),(5,2,1,2),(6,2,4,11),(7,3,6,18),(8,3,8,24),(9,3,9,28),(10,4,1,2),(11,4,5,16),(12,4,3,10),(13,5,2,6),(14,5,1,2),(15,5,4,12),(16,6,6,17),(17,6,8,22),(18,6,7,21),(19,7,1,3),(20,7,4,11),(21,7,5,16),(22,8,7,NULL),(23,8,9,NULL),(24,8,6,NULL);
 /*!40000 ALTER TABLE `testing` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -190,4 +190,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-02-14 15:01:41
+-- Dump completed on 2023-02-17 19:44:27
