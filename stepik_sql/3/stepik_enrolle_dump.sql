@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `achievement`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `achievement` (
   `achievement_id` int NOT NULL AUTO_INCREMENT,
-  `name_achievement` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name_achievement` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `bonus` int DEFAULT NULL,
   PRIMARY KEY (`achievement_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -41,6 +41,30 @@ INSERT INTO `achievement` VALUES (1,'Золотая медаль',5),(2,'Сер�
 UNLOCK TABLES;
 
 --
+-- Table structure for table `applicant`
+--
+
+DROP TABLE IF EXISTS `applicant`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `applicant` (
+  `program_id` int DEFAULT NULL,
+  `enrollee_id` int DEFAULT NULL,
+  `itog` decimal(32,0) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `applicant`
+--
+
+LOCK TABLES `applicant` WRITE;
+/*!40000 ALTER TABLE `applicant` DISABLE KEYS */;
+INSERT INTO `applicant` VALUES (1,3,230),(1,2,226),(1,1,213),(2,6,276),(2,3,230),(2,2,226),(3,6,270),(3,4,238),(3,5,192),(4,6,270),(4,3,242),(4,5,192);
+/*!40000 ALTER TABLE `applicant` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `department`
 --
 
@@ -49,7 +73,7 @@ DROP TABLE IF EXISTS `department`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `department` (
   `department_id` int NOT NULL AUTO_INCREMENT,
-  `name_department` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name_department` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`department_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -73,7 +97,7 @@ DROP TABLE IF EXISTS `enrollee`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `enrollee` (
   `enrollee_id` int NOT NULL AUTO_INCREMENT,
-  `name_enrollee` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name_enrollee` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`enrollee_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -156,7 +180,7 @@ DROP TABLE IF EXISTS `program`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `program` (
   `program_id` int NOT NULL AUTO_INCREMENT,
-  `name_program` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name_program` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `department_id` int DEFAULT NULL,
   `plan` int DEFAULT NULL,
   PRIMARY KEY (`program_id`),
@@ -243,7 +267,7 @@ DROP TABLE IF EXISTS `subject`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `subject` (
   `subject_id` int NOT NULL AUTO_INCREMENT,
-  `name_subject` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name_subject` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`subject_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -267,4 +291,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-02-19 13:21:00
+-- Dump completed on 2023-02-21 21:38:33
