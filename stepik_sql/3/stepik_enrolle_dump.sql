@@ -41,13 +41,14 @@ INSERT INTO `achievement` VALUES (1,'Золотая медаль',5),(2,'Сер�
 UNLOCK TABLES;
 
 --
--- Table structure for table `applicant`
+-- Table structure for table `applicant_order`
 --
 
-DROP TABLE IF EXISTS `applicant`;
+DROP TABLE IF EXISTS `applicant_order`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `applicant` (
+CREATE TABLE `applicant_order` (
+  `str_id` int DEFAULT NULL,
   `program_id` int DEFAULT NULL,
   `enrollee_id` int DEFAULT NULL,
   `itog` decimal(32,0) DEFAULT NULL
@@ -55,13 +56,13 @@ CREATE TABLE `applicant` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `applicant`
+-- Dumping data for table `applicant_order`
 --
 
-LOCK TABLES `applicant` WRITE;
-/*!40000 ALTER TABLE `applicant` DISABLE KEYS */;
-INSERT INTO `applicant` VALUES (1,3,230),(1,2,226),(1,1,213),(2,6,276),(2,3,230),(2,2,226),(3,6,270),(3,4,238),(3,5,192),(4,6,270),(4,3,242),(4,5,192);
-/*!40000 ALTER TABLE `applicant` ENABLE KEYS */;
+LOCK TABLES `applicant_order` WRITE;
+/*!40000 ALTER TABLE `applicant_order` DISABLE KEYS */;
+INSERT INTO `applicant_order` VALUES (NULL,1,3,235),(NULL,1,2,226),(NULL,1,1,219),(NULL,2,6,276),(NULL,2,3,235),(NULL,2,2,226),(NULL,3,6,270),(NULL,3,4,239),(NULL,3,5,200),(NULL,4,6,270),(NULL,4,3,247),(NULL,4,5,200);
+/*!40000 ALTER TABLE `applicant_order` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -291,4 +292,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-02-21 21:38:33
+-- Dump completed on 2023-02-22 19:43:08
