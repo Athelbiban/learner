@@ -1,0 +1,3 @@
+SELECT *
+FROM book
+ORDER BY LENGTH(title)
