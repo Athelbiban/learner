@@ -2,6 +2,7 @@ vcs.xml
 .idea
 requirements.txt
 stepik_bs1/.ipynb_checkpoints
+__pycache__/
 
 # ignore work files
 researches/projecteuler_problem15/python_scripts/out_1.txt
