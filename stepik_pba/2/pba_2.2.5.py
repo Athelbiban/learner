@@ -1,7 +1,5 @@
-import datetime as dt
+from datetime import datetime, timedelta
 
 
-year, month, day = (int(i) for i in input().split())
-
-x = dt.datetime(year, month, day)
-y = dt.timedelta(days=day, months=month, years=year)
+date = datetime(*map(int, input().split())) + timedelta(days=int(input()))
+print(date.year, date.month, date.day)
