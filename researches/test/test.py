@@ -2,11 +2,11 @@ import timeit
 
 
 def f1():
-    # lst = list(range(1_000_000))
-    lst = []
-    for i in range(1000):
-        lst.append(i)
-    return lst
+    lst = list(range(1000))
+    # lst = []
+    # for i in range(1000):
+    #     lst.append(i)
+    # return lst
 
 
 def f2():
