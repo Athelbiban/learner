@@ -1,21 +1,21 @@
 import requests
-import json
+import time
 from files.token_artsy import CLIENT_ID, CLIENT_SECRET
 
 
-data = {
-    'client_id': CLIENT_ID,
-    'client_secret': CLIENT_SECRET
-}
+data = {'client_id': CLIENT_ID, 'client_secret': CLIENT_SECRET}
+r = requests.post("https://api.artsy.net/api/tokens/xapp_token", data=data).json()
+headers = {'X-Xapp-Token': r['token']}
 
-# инициируем запрос на получение токена
-r = requests.post("https://api.artsy.net/api/tokens/xapp_token?client_id=f408e7e0cd4db8e0a03e&client_secret=03493624e023eb8e80d892613c24514d")
-r.encoding = 'utf-8'
-
-print(r)
-# разбираем ответ сервера
-# j = json.loads(r.text)
-
-# достаем токен
-# token = j["token"]
-# print(token)
+with open('files/dataset_24476_4.txt', encoding='utf-8') as inf,\
+        open('files/answer.txt', 'w', encoding='utf-8') as ouf:
+    lst = []
+    for author_id in inf:
+        time.sleep(1)
+        author_id = author_id.rstrip()
+        req = requests.get(f"https://api.artsy.net/api/artists/{author_id}", headers=headers).json()
+        author_name = req['sortable_name']
+        author_birthday = req['birthday']
+        lst.append((author_name, author_birthday))
+    for name, _ in sorted(lst, key=lambda x: (x[1], x[0])):
+        ouf.write(f'{name}\n')
