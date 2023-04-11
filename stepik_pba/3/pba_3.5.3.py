@@ -1,7 +1,7 @@
 import requests
 
 
-with open('dataset_24476_3.txt') as inf:
+with open('files/dataset_24476_3.txt') as inf:
     file = inf.read().split()
 for i in file:
     type_numb = 'math'
