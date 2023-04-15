@@ -1,7 +1,7 @@
 vcs.xml
 .idea
 requirements.txt
-stepik_bs1/.ipynb_checkpoints
+.ipynb_checkpoints
 __pycache__/
 
 # ignore work files
