@@ -1,12 +1,13 @@
-import random
 import string
+from secrets import SystemRandom
 
 
 def generate_password(length, char):
+    crypto = SystemRandom()
     password = []
-    # password.extend(random.choice(char) for char in (low, up, dig))
-    password.extend(random.choice(char) for _ in range(length))
-    random.shuffle(password)
+    # password.extend(crypto.choice(char) for char in (low, up, dig))
+    password.extend(crypto.choice(char) for _ in range(length))
+    crypto.shuffle(password)
     return ''.join(password)
 
 
