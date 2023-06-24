@@ -4,7 +4,7 @@ import csv
 def parser_training_log(input_file, output_file):
     with open(input_file, encoding='utf-8') as inf, open(output_file, 'w') as ouf:
         writer = csv.writer(ouf, delimiter=',')
-        writer.writerow(['train', 'speed', 'error', 'record', 'date'])
+        writer.writerow(['train', 'speed', 'error', 'main_record', 'speed_record', 'accuracy_record', 'date'])
         for string in inf:
             if string[:2] == '##':
                 date = string[3:].rstrip()
@@ -13,27 +13,30 @@ def parser_training_log(input_file, output_file):
                 writer.writerow(find_record(features) + [date])
 
 
-def find_record(features, record=''):
-    for i, f in enumerate(features):
-        if i == 0:
-            if f[0] == "'":
-                train = f[1:-1]
-                record += 'm'
-            else:
-                train = f[:-1]
-        elif i == 1:
-            if f[0] == "'":
-                speed = int(f[1:-1])
-                record += 's'
-            else:
-                speed = int(f[:-1])
-        else:
-            if f[0] == "'":
-                error = float(f[1:])
-                record += 'a'
-            else:
-                error = float(f)
-    return [train, speed, error, record]
+def find_record(features):
+    main_record = 0
+    speed_record = 0
+    accuracy_record = 0
+
+    if features[0][0] == "'":
+        train = features[0][1:-1]
+        main_record = 1
+    else:
+        train = features[0][:-1]
+
+    if features[1][0] == "'":
+        speed = int(features[1][1:-1])
+        speed_record = 1
+    else:
+        speed = int(features[1][:-1])
+
+    if features[2][0] == "'":
+        error = float(features[2][1:])
+        accuracy_record = 1
+    else:
+        error = float(features[2])
+
+    return [train, speed, error, main_record, speed_record, accuracy_record]
 
 
 def main():
