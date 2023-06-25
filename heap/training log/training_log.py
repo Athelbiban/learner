@@ -1,16 +1,22 @@
 import csv
 
 
-def parser_training_log(input_file, output_file):
+def creator_csv(input_file, output_file, first_row=None, func=None):
     with open(input_file, encoding='utf-8') as inf, open(output_file, 'w') as ouf:
         writer = csv.writer(ouf, delimiter=',')
-        writer.writerow(['train', 'speed', 'error', 'main_record', 'speed_record', 'accuracy_record', 'date'])
-        for string in inf:
-            if string[:2] == '##':
-                date = string[3:].rstrip()
-            elif string[0].isdigit():
-                features = string.rstrip()[3:-1].split()
-                writer.writerow(find_record(features) + [date])
+        if first_row:
+            writer.writerow(first_row)
+        if func:
+            func(inf, writer)
+
+
+def writer_training_log(inf, writer, date=None):
+    for string in inf:
+        if string[0] == '#':
+            date = string[3:].rstrip()
+        elif string[0].isdigit():
+            features = string.rstrip()[3:-1].split()
+            writer.writerow(find_record(features) + [date])
 
 
 def find_record(features):
@@ -42,7 +48,8 @@ def find_record(features):
 def main():
     input_file = '/home/stas/Документы/obsidian/main/журнал тренировки слепой печати.md'
     output_file = 'training_log.csv'
-    parser_training_log(input_file, output_file)
+    first_row = ['train', 'speed', 'error', 'main_record', 'speed_record', 'accuracy_record', 'date']
+    creator_csv(input_file, output_file, first_row, writer_training_log)
 
 
 if __name__ == '__main__':
