@@ -24,6 +24,11 @@ def list_files_to_excel(directory):
     print("Файл успешно создан.")
 
 
+def main():
+    directory = 'c:\\Users\\VostrovSO\\Documents\\Востров С.О\\РУ1.264.067 _ Аппаратура М-203Ю (Волан-1)\\РУ2.179.062 _ Прибор 2ВЛ\\pdf\\'
+    list_files_to_excel(directory)
+
+
 # Указываем директорию, для которой нужно вывести список файлов
-directory = 'c:\\Users\\VostrovSO\\Documents\\Востров С.О\\РУ1.264.067 _ Аппаратура М-203Ю (Волан-1)\\РУ2.179.062 _ Прибор 2ВЛ\\pdf\\'
-list_files_to_excel(directory)
+if __name__ == '__main__':
+    main()
