@@ -25,5 +25,5 @@ def list_files_to_excel(directory):
 
 
 # Указываем директорию, для которой нужно вывести список файлов
-directory = 'c:\\Users\\VostrovSO\\Documents\\Востров С.О\\М 203Ю _ Волан1\\М203Ю _ Волан 1 версия 4\\РУ2.179.060 _ Прибор 1ВЛ\\pdf\\'
+directory = 'c:\\Users\\VostrovSO\\Documents\\Востров С.О\\РУ1.264.067 _ Аппаратура М-203Ю (Волан-1)\\РУ2.179.062 _ Прибор 2ВЛ\\pdf\\'
 list_files_to_excel(directory)
