@@ -1,13 +1,14 @@
 from bs4 import BeautifulSoup
 import csv
 import os
+import re
 
 
 def broker_report_html_to_csv(input_files, output_file, date=None):
-    header = ['Наименование', 'ISIN', 'Валюта', 'Количество (нп)', 'Номинал (нп)',
-              'Цена (нп)', 'Стоимость (нп)', 'НКД (нп)', 'Количество (кп)',
-              'Номинал (кп)', 'Цена (кп)', 'Стоимость (кп)', 'НКД (кп)', 'Количество (изп)',
-              'Стоимость (изп)', 'Зачисления', 'Списания', 'Остаток', 'Дата']
+    header = ['Наименование', 'ISIN', 'Валюта', 'Количество_нп', 'Номинал_нп',
+              'Цена_нп', 'Стоимость_нп', 'НКД_нп', 'Количество_кп',
+              'Номинал_кп', 'Цена_кп', 'Стоимость_кп', 'НКД_кп', 'Количество_изп',
+              'Стоимость_изп', 'Зачисления', 'Списания', 'Остаток', 'Дата']
     flag1 = True
     for file, date in zip(input_files, date):
         with open(file) as inf, open(output_file, 'a', encoding='utf-8') as ouf:
@@ -20,12 +21,22 @@ def broker_report_html_to_csv(input_files, output_file, date=None):
                     break
                 if flag2:
                     if string[0].text not in ['Площадка: Фондовый рынок', 'Наименование']:
-                        writer.writerow([float(elem.text.replace(' ', '')) if elem.text.replace(' ', '').isdigit() else elem.text for elem in string] + [date])
+                        writer.writerow([is_digit(elem.text) for elem in string] + [date])
                 if string[0].text == 'Основной рынок':
                     flag2 = True
                     if flag1:
                         writer.writerow(header)
                         flag1 = False
+
+
+def is_digit(elem):
+    elem = elem.replace(' ', '')
+    # if elem == re.fullmatch(r'-?\d+\.?\d*', elem):
+    #     if elem.find('.') > 0:
+    #         elem = float(elem)
+    #     else:
+    #         elem = int(elem)
+    return elem
 
 
 def parse_directory(directory):
