@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 import csv
 import os
-import re
 
 
 def broker_report_html_to_csv(input_files, output_file, date=None):
@@ -21,22 +20,12 @@ def broker_report_html_to_csv(input_files, output_file, date=None):
                     break
                 if flag2:
                     if string[0].text not in ['Площадка: Фондовый рынок', 'Наименование']:
-                        writer.writerow([is_digit(elem.text) for elem in string] + [date])
+                        writer.writerow([elem.text.replace(' ', '') for elem in string] + [date])
                 if string[0].text == 'Основной рынок':
                     flag2 = True
                     if flag1:
                         writer.writerow(header)
                         flag1 = False
-
-
-def is_digit(elem):
-    elem = elem.replace(' ', '')
-    # if elem == re.fullmatch(r'-?\d+\.?\d*', elem):
-    #     if elem.find('.') > 0:
-    #         elem = float(elem)
-    #     else:
-    #         elem = int(elem)
-    return elem
 
 
 def parse_directory(directory):
