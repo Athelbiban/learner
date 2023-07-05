@@ -1,16 +1,24 @@
 import imaplib
 import email
-from email.header import decode_header
 import base64
-from bs4 import BeautifulSoup
-import re
+from passwd.mailru import MAIL_PASS, USERNAME
 
 
-mail_pass = 'midgDSBD6mktmgbRkB7a'
-username = 'vostrov_so@bk.ru'
+mail_pass = MAIL_PASS
+username = USERNAME
 imap_server = 'imap.mail.ru'
 imap = imaplib.IMAP4_SSL(imap_server)
-print(imap.login(username, mail_pass))
-print(imap.list())
-print(imap.select('INBOX'))
-print(imap.search())
+imap.login(username, mail_pass)
+imap.select('SberBroker')
+
+id_list = imap.search(None, 'ALL')[1][0].split()
+for next_mail_id in id_list:
+    res, data = imap.fetch(next_mail_id, '(RFC822)')
+    msg = email.message_from_bytes(data[0][1])
+    payload = msg.get_payload()
+    for part in msg.walk():
+        if part.get_content_disposition() == 'attachment'\
+                and part.get_filename()[-4:] == 'html'\
+                and part.get_filename()[:7] == 'S03DNRY':
+            with open(f'/home/stas/Загрузки/broker_report/{part.get_filename()}', 'w') as ouf:
+                ouf.write(base64.b64decode(part.get_payload()).decode())
