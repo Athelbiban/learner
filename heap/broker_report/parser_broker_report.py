@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import csv
 import os
+import re
 
 
 def get_portfolio(input_files, output_file, date=None):
@@ -12,22 +13,23 @@ def get_portfolio(input_files, output_file, date=None):
     ]
     flag1 = True
     for file, date in zip(input_files, date):
-        with open(file) as inf, open(output_file, 'a', encoding='utf-8') as ouf:
+        with open(file, encoding='utf-8') as inf,\
+                open(output_file, 'a', encoding='utf-8', newline='') as ouf:
             writer = csv.writer(ouf)
-            soup = BeautifulSoup(inf.read(), 'html.parser').select('tr')
+            soup = BeautifulSoup(inf.read(), 'html.parser').select('tr, p')
             flag2 = False
             for string in soup:
-                string = string.find_all('td')
-                if string[0].text == 'Итого по площадке Фондовый рынок, RUB':
-                    break
-                if flag2:
-                    if string[0].text not in ['Площадка: Фондовый рынок', 'Наименование']:
-                        writer.writerow([elem.text.replace(' ', '') for elem in string] + [date])
-                if string[0].text == 'Основной рынок':
+                if re.search(r'Портфель Ценных Бумаг', string.text):
                     flag2 = True
+                elif re.search(r'Итого', string.text):
+                    flag2 = False
+                if flag2:
+                    string = string.find_all('td')
                     if flag1:
                         writer.writerow(header)
                         flag1 = False
+                    if string and string[0].text not in ['Основной рынок', 'Наименование', 'Площадка: Фондовый рынок']:
+                        writer.writerow([elem.text.replace(' ', '') for elem in string] + [date])
 
 
 def get_transactions(input_files, output_file):
@@ -36,24 +38,25 @@ def get_transactions(input_files, output_file):
         'Валюта', 'Вид', 'Количество', 'Цена', 'Сумма', 'НКД', 'Комиссия Брокера',
         'Комиссия Биржи', 'Номер сделки', 'Комментарий', 'Статус'
     ]
+    flag1 = True
     for file in input_files:
-        flag1 = True
-        n = 0
-        with open(file, encoding='utf-8') as inf, open(output_file, 'w', encoding='utf-8') as ouf:
+        with open(file, encoding='utf-8') as inf,\
+                open(output_file, 'a', encoding='utf-8', newline='') as ouf:
             writer = csv.writer(ouf)
-            soup = BeautifulSoup(inf.read(), 'html.parser').select('tr')
+            soup = BeautifulSoup(inf.read(), 'html.parser').select('tr, p')
             flag2 = False
             for string in soup:
-                string = string.find_all('td')
-                if string[0].text == 'Итого, RUB':
-                    n += 1
-                    if n >= 2:
-                        break
-                if string[0].text == 'Дата заключения':
+                if re.search(r'Сделки купли/продажи', string.text):
                     flag2 = True
+                elif re.search(r'Итого', string.text):
+                    flag2 = False
                 if flag2:
-                    if string[0].text not in ['Площадка: Фондовый рынок']:
-                        writer.writerow([elem.text.replace(' ', '') for elem in string])
+                    string = string.find_all('td')
+                    if flag1:
+                        writer.writerow(header)
+                        flag1 = False
+                    if string and string[0].text not in ['Дата заключения', 'Площадка: Фондовый рынок']:
+                        writer.writerow(elem.text.replace(' ', '') for elem in string)
 
 
 def parse_directory(directory):
@@ -61,14 +64,17 @@ def parse_directory(directory):
 
 
 def main():
-    directory = '/home/stas/Загрузки/broker_report/'
-    directory_1 = 'c:\\Users\\VostrovSO\\Downloads\\broker_report\\'
-    paths = parse_directory(directory_1)
+    directory_unix = '/home/stas/Загрузки/broker_report/'
+    directory_win = 'c:\\Users\\VostrovSO\\Downloads\\broker_report\\'
+    paths = parse_directory(directory_win)
     out_file_1, out_file_2 = ['portfolio.csv', 'transactions.csv']
     date = [f'20{i[-2:]}-{i[2:4]}-{i[:2]}' for i in [path.split('_')[-2] for path in paths]]
-    # get_portfolio(paths, out_file_1, date)
+    get_portfolio(paths, out_file_1, date)
     get_transactions(paths, out_file_2)
 
 
 if __name__ == '__main__':
+    # 1. Дописать функцию удаляющую в директориях out_file_1
+    # и out_file_2 файлы portfolio.csv и transactions.csv
+    # 2. Убрать дублирующий код в методах get_portfolio и get_transactions
     main()
