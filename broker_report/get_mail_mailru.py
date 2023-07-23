@@ -4,7 +4,6 @@ import base64
 import re
 from passwd.mailru import MAIL_PASS, USERNAME
 
-
 def loader_mail_attachments(imap, directory, files_extension='.html'):
     id_list = imap.search(None, 'ALL')[1][0].split()
     for next_mail_id in id_list:
@@ -19,8 +18,8 @@ def loader_mail_attachments(imap, directory, files_extension='.html'):
 
 
 def main():
-    mail_pass = MAIL_PASS
-    username = USERNAME
+    mail_pass = input('MAIL_PASS: ')
+    username = input('USERNAME: ')
     directory = '/home/stas/Загрузки/broker_report/'
     imap_server = 'imap.mail.ru'
     imap = imaplib.IMAP4_SSL(imap_server)
