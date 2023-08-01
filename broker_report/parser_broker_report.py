@@ -2,6 +2,8 @@ from bs4 import BeautifulSoup
 import csv
 import os
 import re
+import platform
+from pathlib import Path
 
 
 def get_portfolio(input_files, output_file, date=None):
@@ -61,16 +63,21 @@ def parse_directory(directory):
 
 
 def main():
-    directory_unix = '/home/stas/Загрузки/broker_report/'
-    directory_win = 'c:\\Users\\VostrovSO\\Downloads\\broker_report\\'
-    paths = parse_directory(directory_unix)
+    system = platform.system()
+    if system == 'Linux':
+        directory = '/home/stas/Загрузки/broker_report/'
+    elif system == 'Windows':
+        directory = 'c:\\Users\\VostrovSO\\Downloads\\broker_report\\'
+    else:
+        raise Exception('Нет директории для данной ОС')
+    paths = parse_directory(directory)
     out_file_1, out_file_2 = ['portfolio.csv', 'transactions.csv']
+    for f in out_file_1, out_file_2:
+        Path(f).unlink(missing_ok=True)
     date = [f'20{i[-2:]}-{i[2:4]}-{i[:2]}' for i in [path.split('_')[-2] for path in paths]]
     get_portfolio(paths, out_file_1, date)
     get_transactions(paths, out_file_2)
 
 
 if __name__ == '__main__':
-    # 1. Дописать функцию удаляющую в директориях out_file_1
-    # и out_file_2 файлы portfolio.csv и transactions.csv
     main()
