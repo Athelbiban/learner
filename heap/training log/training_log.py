@@ -1,4 +1,5 @@
 import csv
+import platform
 
 
 def creator_csv(input_file, output_file, first_row=None, func=None):
@@ -46,7 +47,15 @@ def find_record(features):
 
 
 def main():
-    input_file = '/home/stas/Документы/obsidian/main/журнал тренировки слепой печати.md'
+    system = platform.system()
+    if system == 'Linux':
+        directory = '/home/stas/Документы/obsidian/main/журнал тренировки слепой печати.md'
+    elif system == 'Windows':
+        directory = 'c:\\Users\\VostrovSO\\Downloads\\broker_report\\'
+    else:
+        raise Exception('Нет директории для данной ОС')
+
+    input_file = directory
     output_file = 'training_log.csv'
     first_row = ['train', 'speed', 'error', 'main_record', 'speed_record', 'accuracy_record', 'date']
     creator_csv(input_file, output_file, first_row, writer_training_log)
