@@ -160,18 +160,18 @@ def main():
     main_df['P/L, руб.'] = main_df['Текущая цена'] - main_df['Средняя цена'] * main_df['Количество']
     main_df['P/L, %'] = (main_df['Котировки'] * 100 / main_df['Средняя цена'] - 100).round(2)
 
-    bond_price, bond_NKD, bond_amount, bond_average_price, bond_commission = \
-        main_df.loc['SU25084RMFS3', 'Котировки'], \
-        main_df.loc['SU25084RMFS3', 'НКД'], \
-        main_df.loc['SU25084RMFS3', 'Количество'], \
-        main_df.loc['SU25084RMFS3', 'Средняя цена'], \
-        main_df.loc['SU25084RMFS3', 'Комиссия']
+    # bond_price, bond_NKD, bond_amount, bond_average_price, bond_commission = \
+    #     main_df.loc['SU25084RMFS3', 'Котировки'], \
+    #     main_df.loc['SU25084RMFS3', 'НКД'], \
+    #     main_df.loc['SU25084RMFS3', 'Количество'], \
+    #     main_df.loc['SU25084RMFS3', 'Средняя цена'], \
+    #     main_df.loc['SU25084RMFS3', 'Комиссия']
 
-    main_df.loc['SU25084RMFS3', 'Котировки'] = bond_price * 10
-    main_df.loc['SU25084RMFS3', 'Текущая цена'] = (bond_price * 10 + bond_NKD) * bond_amount
-    main_df.loc['SU25084RMFS3', 'P/L, руб.'] = (main_df.loc['SU25084RMFS3', 'Текущая цена'] -
-                                                bond_average_price * bond_amount)
-    main_df.loc['SU25084RMFS3', 'P/L, %'] = (((bond_price * 10 + bond_NKD) * 100 / bond_average_price) - 100).round(2)
+    # main_df.loc['SU25084RMFS3', 'Котировки'] = bond_price * 10
+    # main_df.loc['SU25084RMFS3', 'Текущая цена'] = (bond_price * 10 + bond_NKD) * bond_amount
+    # main_df.loc['SU25084RMFS3', 'P/L, руб.'] = (main_df.loc['SU25084RMFS3', 'Текущая цена'] -
+    #                                             bond_average_price * bond_amount)
+    # main_df.loc['SU25084RMFS3', 'P/L, %'] = (((bond_price * 10 + bond_NKD) * 100 / bond_average_price) - 100).round(2)
 
     main_df.to_csv(path_or_buf='portfolio_main.csv', index_label=False)
 
