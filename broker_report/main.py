@@ -115,9 +115,9 @@ def main():
     portfolio = pd.read_csv('portfolio.csv')
     portfolio['Дата'] = portfolio['Дата'].astype('datetime64[ns]')
     transactions = pd.read_csv('transactions.csv').drop_duplicates(['Дата заключения', 'Время заключения', 'Статус'])
-    transactions['Дата заключения'] = pd.to_datetime(transactions['Дата заключения'] +
-                                                     ' ' + transactions['Время заключения'], dayfirst=True)
-    transactions['Дата расчетов'] = pd.to_datetime(transactions['Дата расчетов'], dayfirst=True)
+    # transactions['Дата заключения'] = pd.to_datetime(transactions['Дата заключения'] +
+    #                                                  ' ' + transactions['Время заключения'], dayfirst=True)
+    # transactions['Дата расчетов'] = pd.to_datetime(transactions['Дата расчетов'], dayfirst=True)
     transactions = transactions.drop('Время заключения', axis=1)\
                                .dropna(axis=1).sort_values('Дата заключения').reset_index(drop=True)
     transactions_executed = transactions[transactions['Статус'] == 'И']
