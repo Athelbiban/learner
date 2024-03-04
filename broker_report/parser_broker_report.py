@@ -69,7 +69,7 @@ def main():
     elif system == 'Windows':
         directory = 'c:\\Users\\VostrovSO\\Downloads\\broker_report\\'
     else:
-        raise Exception('Нет директории для данной ОС')
+        raise Exception('Нет директории для данной ОС. Смотри parser_broker_report.py')
     paths = parse_directory(directory)
     out_file_1, out_file_2 = ['portfolio.csv', 'transactions.csv']
     for f in out_file_1, out_file_2:
