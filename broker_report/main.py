@@ -63,7 +63,10 @@ def get_trading_dict():
             stocks = 'bonds'
         url = (f"https://iss.moex.com/iss/engines/stock/markets/{stocks}/boards/{id_trading}/" 
                f"securities.csv?iss.meta=off&iss.only=marketdata&marketdata.columns=SECID,LAST")
-        csv_text = requests.get(url).text.split('\n')
+        try:
+            csv_text = requests.get(url).text.split('\n')
+        except requests.exceptions.ConnectionError as e:
+            raise Exception('Проблема с запросом: ' + url)
         trading_dict[id_trading] = csv_text
     return trading_dict
 
