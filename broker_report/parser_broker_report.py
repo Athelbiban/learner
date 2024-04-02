@@ -1,3 +1,5 @@
+from typing import List
+
 from bs4 import BeautifulSoup
 import csv
 import os
@@ -13,7 +15,7 @@ def get_portfolio(input_files, output_file, date=None):
         'Номинал_кп', 'Цена_кп', 'Стоимость_кп', 'НКД_кп', 'Количество_изп',
         'Стоимость_изп', 'Зачисления', 'Списания', 'Остаток', 'Дата'
     ]
-    key_words = ['', 'Основной рынок', 'Наименование', 'Площадка: Фондовый рынок']
+    key_words = ['', 'Основной рынок', 'Наименование', 'Площадка: Фондовый рынок', '1']
     reg = re.compile('Портфель Ценных Бумаг')
     flag1 = True
     for file, date in zip(input_files, date):
@@ -27,7 +29,7 @@ def get_transactions(input_files, output_file):
         'Код', 'Валюта', 'Вид', 'Количество', 'Цена', 'Сумма', 'НКД', 
         'Комиссия Брокера', 'Комиссия Биржи', 'Номер сделки', 'Комментарий', 'Статус'
     ]
-    key_words = ['Дата заключения', 'Площадка: Фондовый рынок']
+    key_words = ['Дата заключения', 'Площадка: Фондовый рынок', '1']
     reg = re.compile('Сделки купли/продажи')
     flag1 = True
     for file in input_files:
@@ -63,18 +65,25 @@ def parse_directory(directory):
 
 
 def main():
+
     system = platform.system()
+
     if system == 'Linux':
         directory = '/home/stas/Загрузки/broker_report/'
     elif system == 'Windows':
         directory = 'c:\\Users\\VostrovSO\\Downloads\\broker_report\\'
     else:
         raise Exception('Нет директории для данной ОС. Смотри parser_broker_report.py')
+
     paths = parse_directory(directory)
     out_file_1, out_file_2 = ['portfolio.csv', 'transactions.csv']
+
     for f in out_file_1, out_file_2:
         Path(f).unlink(missing_ok=True)
-    date = [f'20{i[-2:]}-{i[2:4]}-{i[:2]}' for i in [path.split('_')[-2] for path in paths]]
+
+    # format date '2022-01-31'
+    date: list[str] = [f'20{i[-2:]}-{i[2:4]}-{i[:2]}' for i in [path.split('_')[-2] for path in paths]]
+
     get_portfolio(paths, out_file_1, date)
     get_transactions(paths, out_file_2)
 
