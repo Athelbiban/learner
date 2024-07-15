@@ -30,19 +30,30 @@ def fix_split(ticker_list, transactions, transactions_executed, share_split_dict
 
 
 def get_share_price_dict(tickers: list, transactions_executed):
+
     share_price_dict = {}
+
     for ticker in tickers:
-        if ticker in ['SBMX', 'AFKS']:
+        if ticker in ['SBMX', 'AFKS', 'SBGD']:
             round_numb = 3
         elif ticker in ['IRAO']:
             round_numb = 4
         else:
             round_numb = 2
+
         share = transactions_executed[transactions_executed['Код'] == ticker]
-        share_price = ((share['Сумма'].sum() + share['Комиссия Брокера'].sum() + share['Комиссия Биржи'].sum()) /
-                       (share.loc[share['Вид'] == 'Покупка', 'Количество'].sum() -
-                        share.loc[share['Вид'] == 'Продажа', 'Количество'].sum())).round(round_numb)
+
+        # добавил костыльную проверку из-за ошибки деления на ноль, лень разбираться - оставил на потом
+        a = ((share.loc[share['Вид'] == 'Покупка', 'Количество'].sum() -
+              share.loc[share['Вид'] == 'Продажа', 'Количество'].sum())).round(round_numb)
+        if a == 0:
+            share_price = 0
+        else:
+            share_price = ((share['Сумма'].sum() + share['Комиссия Брокера'].sum() + share['Комиссия Биржи'].sum()) /
+                           a).round(round_numb)
+
         share_price_dict[ticker] = share_price
+
     return share_price_dict
 
 
@@ -113,7 +124,7 @@ def get_coupon_dict(tickers: list):
 
 def main():
 
-    mail_main()
+    # mail_main()
     parser_main()
 
     portfolio = pd.read_csv('portfolio.csv')
