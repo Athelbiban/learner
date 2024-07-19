@@ -124,7 +124,7 @@ def get_coupon_dict(tickers: list):
 
 def main():
 
-    # mail_main()
+    mail_main()
     parser_main()
 
     portfolio = pd.read_csv('portfolio.csv')
