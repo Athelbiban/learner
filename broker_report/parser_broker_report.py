@@ -1,5 +1,3 @@
-from typing import List
-
 from bs4 import BeautifulSoup
 import csv
 import os
@@ -15,7 +13,7 @@ def get_portfolio(input_files, output_file, date=None):
         'Номинал_кп', 'Цена_кп', 'Стоимость_кп', 'НКД_кп', 'Количество_изп',
         'Стоимость_изп', 'Зачисления', 'Списания', 'Остаток', 'Дата'
     ]
-    key_words = ['', 'Основной рынок', 'Наименование', 'Площадка: Фондовый рынок', '1']
+    key_words = ['', 'Основной рынок', 'Наименование', 'Площадка: Фондовый рынок', '1', 'Блокировано']
     reg = re.compile('Портфель Ценных Бумаг')
     flag1 = True
     for file, date in zip(input_files, date):

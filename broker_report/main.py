@@ -6,10 +6,11 @@ from parser_broker_report import main as parser_main
 
 
 def fix_split(ticker_list, transactions, transactions_executed, share_split_dict):
+
     ticker_list_copy = ticker_list.copy()
     for ticker in ticker_list_copy:
-        if ticker == 'RU000A101FA1':
-            new_ticker = 'SU25084RMFS3'
+        if ticker == 'RU000A1038V6':
+            new_ticker = 'SU26238RMFS4'
             ticker_list.remove(ticker)
             ticker_list.append(new_ticker)
             transactions_executed.loc[transactions['Код'] == ticker, 'Код'] = new_ticker
@@ -18,6 +19,7 @@ def fix_split(ticker_list, transactions, transactions_executed, share_split_dict
             ticker_list.remove(ticker)
             ticker_list.append(new_ticker)
             transactions_executed.loc[transactions['Код'] == ticker, 'Код'] = new_ticker
+
     for ticker in ticker_list:
         if ticker in share_split_dict:
             transactions_executed.loc[(transactions_executed['Код'] == ticker) &
@@ -32,7 +34,6 @@ def fix_split(ticker_list, transactions, transactions_executed, share_split_dict
 def get_share_price_dict(tickers: list, transactions_executed):
 
     share_price_dict = {}
-
     for ticker in tickers:
         if ticker in ['SBMX', 'AFKS', 'SBGD']:
             round_numb = 3
@@ -67,10 +68,10 @@ def get_share_amount_dict(tickers: list, transactions_executed):
 
 def get_trading_dict():
     trading_dict = {}
-    trading_mode_list = ['TQBR', 'TQTF', 'TQCB', 'TQOB']
+    trading_mode_list = ['TQBR', 'TQTF', 'TQCB', 'TQOB', 'TQIR']
     for id_trading in trading_mode_list:
         stocks = 'shares'
-        if id_trading in ['TQOB', 'TQCB']:
+        if id_trading in ['TQOB', 'TQCB', 'TQIR']:
             stocks = 'bonds'
         url = (f"https://iss.moex.com/iss/engines/stock/markets/{stocks}/boards/{id_trading}/" 
                f"securities.csv?iss.meta=off&iss.only=marketdata&marketdata.columns=SECID,LAST")
