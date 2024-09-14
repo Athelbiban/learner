@@ -71,7 +71,7 @@ def main():
     elif system == 'Windows':
         directory = 'c:\\Users\\VostrovSO\\Downloads\\broker_report\\'
     else:
-        raise Exception('Нет директории для данной ОС. Смотри parser_broker_report.py')
+        raise Exception('Нет директории для данной ОС: ' + system)
 
     paths = parse_directory(directory)
     out_file_1, out_file_2 = ['portfolio.csv', 'transactions.csv']
@@ -80,7 +80,15 @@ def main():
         Path(f).unlink(missing_ok=True)
 
     # format date '2022-01-31'
-    date: list[str] = [f'20{i[-2:]}-{i[2:4]}-{i[:2]}' for i in [path.split('_')[-2] for path in paths]]
+    date: list[str] = ['']
+    for path in paths:
+        path_split = path.split('.')[0].split('_')
+        if path_split[-1].isdigit():
+            date = [f'20{i[-2:]}-{i[2:4]}-{i[:2]}' for i in [path_split[-1]]]
+        elif path_split[-2].isdigit():
+            date = [f'20{i[-2:]}-{i[2:4]}-{i[:2]}' for i in [path_split[-2]]]
+        else:
+            raise Exception('Неверное имя файла: ' + path)
 
     get_portfolio(paths, out_file_1, date)
     get_transactions(paths, out_file_2)

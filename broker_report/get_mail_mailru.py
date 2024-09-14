@@ -14,14 +14,21 @@ def loader_mail_attachments(imap, directory, files_extension='.html'):
         for part in msg.walk():
             if part.get_content_disposition() == 'attachment'\
                     and part.get_filename()[:7] == 'S03DNRY'\
-                    and re.search(r'\.\w+$', part.get_filename()).group() == files_extension:
+                    and (re.search(r'\.\w+$', part.get_filename()).group() == files_extension
+                         or re.search(r'\.\w+$', part.get_filename()).group() == files_extension.upper()):
                 with open(f'{directory}{part.get_filename()}', 'w', encoding='utf-8') as ouf:
                     ouf.write(base64.b64decode(part.get_payload()).decode())
 
 
 def main():
-    mail_pass = input('MAIL_PASS: ')
-    username = input('USERNAME: ')
+
+    if MAIL_PASS and USERNAME:
+        mail_pass = MAIL_PASS
+        username = USERNAME
+    else:
+        mail_pass = input('MAIL_PASS: ')
+        username = input('USERNAME: ')
+
     system = platform.system()
     if system == 'Linux':
         directory = '/home/stas/Загрузки/broker_report/'
@@ -29,6 +36,7 @@ def main():
         directory = 'c:\\Users\\VostrovSO\\Downloads\\broker_report\\'
     else:
         raise Exception('Нет директории для данной ОС')
+
     # directory = '/home/stas/Загрузки/broker_report/'
     imap_server = 'imap.mail.ru'
     imap = imaplib.IMAP4_SSL(imap_server)

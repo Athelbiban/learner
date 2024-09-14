@@ -39,6 +39,8 @@ def get_share_price_dict(tickers: list, transactions_executed):
             round_numb = 3
         elif ticker in ['IRAO']:
             round_numb = 4
+        elif ticker in ['HYDR']:
+            round_numb = 5
         else:
             round_numb = 2
 
