@@ -14,8 +14,8 @@ def fix_split(ticker_list, transactions, transactions_executed, share_split_dict
             ticker_list.remove(ticker)
             ticker_list.append(new_ticker)
             transactions_executed.loc[transactions['Код'] == ticker, 'Код'] = new_ticker
-        if ticker == 'VTBE':
-            new_ticker = 'RSHE'
+        if ticker == 'RU000A101QE0':
+            new_ticker = 'SU26234RMFS3'
             ticker_list.remove(ticker)
             ticker_list.append(new_ticker)
             transactions_executed.loc[transactions['Код'] == ticker, 'Код'] = new_ticker
