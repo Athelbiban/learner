@@ -5,17 +5,12 @@ from get_mail_mailru import main as mail_main
 from parser_broker_report import main as parser_main
 
 
-def fix_split(ticker_list, transactions, transactions_executed, share_split_dict):
+def fix_split(ticker_list, transactions, transactions_executed, share_split_dict, replacement_dict):
 
     ticker_list_copy = ticker_list.copy()
     for ticker in ticker_list_copy:
-        if ticker == 'RU000A1038V6':
-            new_ticker = 'SU26238RMFS4'
-            ticker_list.remove(ticker)
-            ticker_list.append(new_ticker)
-            transactions_executed.loc[transactions['Код'] == ticker, 'Код'] = new_ticker
-        if ticker == 'RU000A101QE0':
-            new_ticker = 'SU26234RMFS3'
+        if ticker in replacement_dict:
+            new_ticker = replacement_dict[ticker]
             ticker_list.remove(ticker)
             ticker_list.append(new_ticker)
             transactions_executed.loc[transactions['Код'] == ticker, 'Код'] = new_ticker
@@ -150,12 +145,12 @@ def main():
         'FXRU': ['2022-02-17', 10],
         'FXDE': ['2021-12-15', 100]
     }
-    # replacement_dict = {
-    #     'VTBE': 'RSHE',
-    #     'RU000A101FA1': 'SU25084RMFS3'
-    # }
+    replacement_dict = {
+        'RU000A1038V6': 'SU26238RMFS4',
+        'RU000A101QE0': 'SU26234RMFS3'
+    }
 
-    fix_split(ticker_list, transactions, transactions_executed, share_split_dict)
+    fix_split(ticker_list, transactions, transactions_executed, share_split_dict, replacement_dict)
     share_price_dict = get_share_price_dict(ticker_list, transactions_executed)
     share_amount_dict = get_share_amount_dict(ticker_list, transactions_executed)
     last_prices_dict = get_last_prices_dict(ticker_list)
