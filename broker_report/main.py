@@ -5,7 +5,12 @@ from get_mail_mailru import main as mail_main
 from parser_broker_report import main as parser_main
 
 
-def fix_split(ticker_list, transactions, transactions_executed, share_split_dict, replacement_dict):
+def fix_split(ticker_list, transactions, transactions_executed, share_split_dict):
+
+    replacement_dict = {
+        'RU000A1038V6': 'SU26238RMFS4',
+        'RU000A101QE0': 'SU26234RMFS3'
+    }
 
     ticker_list_copy = ticker_list.copy()
     for ticker in ticker_list_copy:
@@ -28,14 +33,24 @@ def fix_split(ticker_list, transactions, transactions_executed, share_split_dict
 
 def get_share_price_dict(tickers: list, transactions_executed):
 
+    round_numb_3_list = ['AFKS', 'AFLT', 'LKOH', 'MGNT', 'RTKM']
+
+    round_numb_4_list = ['IRAO', 'MOEX', 'YDEX', 'SBMM']
+
+    round_numb_5_list = ['HYDR', 'AFKS']
+
+    round_numb_6_list = ['GAZP', 'MTSS', 'NVTK', 'ROSN', 'SBER', 'CHMF', 'SNGS', 'SBGD', 'SBMX']
+
     share_price_dict = {}
     for ticker in tickers:
-        if ticker in ['SBMX', 'AFKS', 'SBGD']:
+        if ticker in round_numb_3_list:
             round_numb = 3
-        elif ticker in ['IRAO']:
+        elif ticker in round_numb_4_list:
             round_numb = 4
-        elif ticker in ['HYDR']:
+        elif ticker in round_numb_5_list:
             round_numb = 5
+        elif ticker in round_numb_6_list:
+            round_numb = 6
         else:
             round_numb = 2
 
@@ -145,12 +160,8 @@ def main():
         'FXRU': ['2022-02-17', 10],
         'FXDE': ['2021-12-15', 100]
     }
-    replacement_dict = {
-        'RU000A1038V6': 'SU26238RMFS4',
-        'RU000A101QE0': 'SU26234RMFS3'
-    }
 
-    fix_split(ticker_list, transactions, transactions_executed, share_split_dict, replacement_dict)
+    fix_split(ticker_list, transactions, transactions_executed, share_split_dict)
     share_price_dict = get_share_price_dict(ticker_list, transactions_executed)
     share_amount_dict = get_share_amount_dict(ticker_list, transactions_executed)
     last_prices_dict = get_last_prices_dict(ticker_list)
