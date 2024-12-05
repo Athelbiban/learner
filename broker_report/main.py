@@ -33,13 +33,13 @@ def fix_split(ticker_list, transactions, transactions_executed, share_split_dict
 
 def get_share_price_dict(tickers: list, transactions_executed):
 
-    round_numb_3_list = ['AFKS', 'AFLT', 'LKOH', 'MGNT', 'RTKM']
+    round_numb_3_list = ['LKOH', 'MGNT']
 
     round_numb_4_list = ['IRAO', 'MOEX', 'YDEX', 'SBMM']
 
     round_numb_5_list = ['HYDR', 'AFKS']
 
-    round_numb_6_list = ['GAZP', 'MTSS', 'NVTK', 'ROSN', 'SBER', 'CHMF', 'SNGS', 'SBGD', 'SBMX']
+    round_numb_6_list = ['GAZP', 'MTSS', 'NVTK', 'ROSN', 'SBER', 'CHMF', 'SNGS', 'SBGD', 'SBMX', 'AFKS', 'AFLT', 'RTKM']
 
     share_price_dict = {}
     for ticker in tickers:
@@ -137,7 +137,7 @@ def get_coupon_dict(tickers: list):
 
 def main():
 
-    # mail_main()
+    mail_main()
     parser_main()
 
     portfolio = pd.read_csv('portfolio.csv')
