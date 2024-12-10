@@ -1,6 +1,6 @@
 import os
 
-dir_path = r'c:\Users\VostrovSO\Documents\Востров С.О\УИШЯ.466539.001_Прибор 1Е\PDF\printed'
+dir_path = r'c:\Users\VostrovSO\Documents\Востров С.О\РУ2.179.065 _ Изделие ЗСПУ-У\pdf'
 output_file = 'file_names.txt'
 
 with open(output_file, 'w') as f:
