@@ -2,7 +2,8 @@ import imaplib
 import email
 import base64
 import re
-import platform
+
+from broker_report.get_directory import get_directory
 from passwd.mailru import MAIL_PASS, USERNAME
 
 
@@ -22,22 +23,17 @@ def loader_mail_attachments(imap, directory, files_extension='.html'):
 
 def main():
 
-    if MAIL_PASS and USERNAME:
+    if MAIL_PASS:
         mail_pass = MAIL_PASS
-        username = USERNAME
     else:
         mail_pass = input('MAIL_PASS: ')
+
+    if USERNAME:
+        username = USERNAME
+    else:
         username = input('USERNAME: ')
 
-    system = platform.system()
-    if system == 'Linux':
-        directory = '/home/stas/Загрузки/broker_report/'
-    elif system == 'Windows':
-        directory = 'c:\\Users\\VostrovSO\\Downloads\\broker_report\\'
-    else:
-        raise Exception('Нет директории для данной ОС')
-
-    # directory = '/home/stas/Загрузки/broker_report/'
+    directory = get_directory()
     imap_server = 'imap.mail.ru'
     imap = imaplib.IMAP4_SSL(imap_server)
     imap.login(username, mail_pass)

@@ -2,8 +2,8 @@ from bs4 import BeautifulSoup
 import csv
 import os
 import re
-import platform
 from pathlib import Path
+from broker_report.get_directory import get_directory
 
 
 def get_portfolio(input_files, output_file, date=None):
@@ -64,15 +64,7 @@ def parse_directory(directory):
 
 def main():
 
-    system = platform.system()
-
-    if system == 'Linux':
-        directory = '/home/stas/Загрузки/broker_report/'
-    elif system == 'Windows':
-        directory = 'c:\\Users\\VostrovSO\\Downloads\\broker_report\\'
-    else:
-        raise Exception('Нет директории для данной ОС: ' + system)
-
+    directory = get_directory()
     paths = parse_directory(directory)
     out_file_1, out_file_2 = ['portfolio.csv', 'transactions.csv']
 
