@@ -20,7 +20,7 @@ def get_directory():
             raise Exception('Директория отсутствует')
 
     else:
-        raise Exception('Нет директории для данной ОС: ' + system)
+        raise Exception('Пока не умею работать с данной ОС: ' + system)
 
     return directory
 

@@ -14,6 +14,7 @@ def fix_split(ticker_list, transactions, transactions_executed, share_split_dict
 
     ticker_list_copy = ticker_list.copy()
     for ticker in ticker_list_copy:
+
         if ticker in replacement_dict:
             new_ticker = replacement_dict[ticker]
             ticker_list.remove(ticker)
@@ -21,6 +22,7 @@ def fix_split(ticker_list, transactions, transactions_executed, share_split_dict
             transactions_executed.loc[transactions['Код'] == ticker, 'Код'] = new_ticker
 
     for ticker in ticker_list:
+
         if ticker in share_split_dict:
             transactions_executed.loc[(transactions_executed['Код'] == ticker) &
                                       (transactions_executed['Дата заключения'] <
@@ -31,18 +33,18 @@ def fix_split(ticker_list, transactions, transactions_executed, share_split_dict
                  share_split_dict[ticker][1])
 
 
-def get_share_price_dict(tickers: list, transactions_executed):
+def get_stock_data_dict(tickers: list, transactions_executed):
 
     round_numb_3_list = ['LKOH', 'MGNT']
-
     round_numb_4_list = ['IRAO', 'MOEX', 'YDEX', 'SBMM']
-
     round_numb_5_list = ['HYDR', 'AFKS']
-
     round_numb_6_list = ['GAZP', 'MTSS', 'NVTK', 'ROSN', 'SBER', 'CHMF', 'SNGS', 'SBGD', 'SBMX', 'AFKS', 'AFLT', 'RTKM']
 
+    share_amount_dict = {}
     share_price_dict = {}
+    commission_dict = {}
     for ticker in tickers:
+
         if ticker in round_numb_3_list:
             round_numb = 3
         elif ticker in round_numb_4_list:
@@ -54,84 +56,100 @@ def get_share_price_dict(tickers: list, transactions_executed):
         else:
             round_numb = 2
 
-        share = transactions_executed[transactions_executed['Код'] == ticker]
+        share_frame = transactions_executed[transactions_executed['Код'] == ticker]
+        share_list = list(zip(share_frame['Вид'], share_frame['Количество'], share_frame['Сумма'],
+                              share_frame['Комиссия Брокера'], share_frame['Комиссия Биржи']))
 
-        # добавил костыльную проверку из-за ошибки деления на ноль, лень разбираться - оставил на потом
-        a = ((share.loc[share['Вид'] == 'Покупка', 'Количество'].sum() -
-              share.loc[share['Вид'] == 'Продажа', 'Количество'].sum())).round(round_numb)
-        if a == 0:
-            share_price = 0
-        else:
-            share_price = ((share['Сумма'].sum() + share['Комиссия Брокера'].sum() + share['Комиссия Биржи'].sum()) /
-                           a).round(round_numb)
+        amount = price_avg = total_cost = commission = 0
+        for i in range(len(share_list)):
 
-        share_price_dict[ticker] = share_price
+            share_type = share_list[i][0]
+            amount_new = share_list[i][1]
+            total_cost_new = share_list[i][2]
+            commission_new = share_list[i][3] + share_list[i][4]
 
-    return share_price_dict
+            if share_type == 'Покупка':
+                amount += amount_new
+                total_cost += total_cost_new
+                commission += commission_new
+                price_avg = round((total_cost + commission) / amount, round_numb)
 
+            elif share_type == 'Продажа':
+                amount -= amount_new
+                total_cost = amount * price_avg
 
-def get_share_amount_dict(tickers: list, transactions_executed):
-    share_amount_dict = {}
-    for ticker in tickers:
-        share_amount_dict[ticker] = (transactions_executed.loc[transactions_executed['Код'] == ticker, 'Количество']
-                                     .sum())
-    return share_amount_dict
+                if amount > 0:
+                    commission += commission_new
+                else:
+                    commission = 0
+
+            else:
+                raise Exception('Неверный вид транзакции')
+
+        share_amount_dict[ticker] = amount
+        share_price_dict[ticker] = price_avg
+        commission_dict[ticker] = round(commission, 2)
+
+    return share_amount_dict, share_price_dict, commission_dict
 
 
 def get_trading_dict():
+
     trading_dict = {}
     trading_mode_list = ['TQBR', 'TQTF', 'TQCB', 'TQOB', 'TQIR']
     for id_trading in trading_mode_list:
+
         stocks = 'shares'
         if id_trading in ['TQOB', 'TQCB', 'TQIR']:
             stocks = 'bonds'
+
         url = (f"https://iss.moex.com/iss/engines/stock/markets/{stocks}/boards/{id_trading}/" 
                f"securities.csv?iss.meta=off&iss.only=marketdata&marketdata.columns=SECID,LAST")
         try:
             csv_text = requests.get(url).text.split('\n')
+
         except requests.exceptions.ConnectionError as e:
             raise Exception('Проблема с запросом: ' + url)
+
         trading_dict[id_trading] = csv_text
+
     return trading_dict
 
 
 def get_last_prices_dict(tickers: list):
+
     last_prices_dict = {}
     trading_dict = get_trading_dict()
     for ticker in tickers:
+
         if ticker == 'RU000A101FA1':
             ticker = 'SU25084RMFS3'
         if ticker == 'VTBE':
             ticker = 'RSHE'
+
         for value in trading_dict.values():
             for line in value:
                 line = line.split(';')
+
                 if ticker in line:
                     last_prices_dict[ticker] = line[1]
+
     return last_prices_dict
 
 
-def get_commission_dict(tickers: list, transactions_executed):
-    commission_dict = {}
-    for ticker in tickers:
-        commission_dict[ticker] = (transactions_executed.loc[transactions_executed['Код'] ==
-                                                             ticker, 'Комиссия Брокера'] +
-                                   transactions_executed.loc[transactions_executed['Код'] == ticker,
-                                   'Комиссия Биржи']).sum().round(2)
-    return commission_dict
-
-
 def get_coupon_dict(tickers: list):
+
     coupon_dict = {}
     url = "https://iss.moex.com/iss/engines/stock/markets/bonds/boards/TQOB/securities.csv?iss.meta=off&iss.only" \
           "=securities&securities.columns=SECID,ACCRUEDINT "
     csv_text = requests.get(url).text.split('\n')
-
     for ticker in tickers:
         for line in csv_text:
             line = line.split(';')
+
             if ticker in line:
                 coupon_dict[ticker] = line[1]
+
     return coupon_dict
 
 
@@ -162,10 +180,8 @@ def main():
     }
 
     fix_split(ticker_list, transactions, transactions_executed, share_split_dict)
-    share_price_dict = get_share_price_dict(ticker_list, transactions_executed)
-    share_amount_dict = get_share_amount_dict(ticker_list, transactions_executed)
+    share_amount_dict, share_price_dict, commission_dict = get_stock_data_dict(ticker_list, transactions_executed)
     last_prices_dict = get_last_prices_dict(ticker_list)
-    commission_dict = get_commission_dict(ticker_list, transactions_executed)
     coupon_dict = get_coupon_dict(ticker_list)
 
     portfolio_dict = {

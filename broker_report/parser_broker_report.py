@@ -3,7 +3,7 @@ import csv
 import os
 import re
 from pathlib import Path
-from broker_report.get_directory import get_directory
+from get_directory import get_directory
 
 
 def get_portfolio(input_files, output_file, date=None):
