@@ -42,7 +42,7 @@ def get_stock_data_dict(tickers: list, transactions_executed):
 
     share_amount_dict = {}
     share_price_dict = {}
-    commission_dict = {}
+    share_commission_dict = {}
     for ticker in tickers:
 
         if ticker in round_numb_3_list:
@@ -60,37 +60,37 @@ def get_stock_data_dict(tickers: list, transactions_executed):
         share_list = list(zip(share_frame['Вид'], share_frame['Количество'], share_frame['Сумма'],
                               share_frame['Комиссия Брокера'], share_frame['Комиссия Биржи']))
 
-        amount = price_avg = total_cost = commission = 0
+        share_amount = share_price_avg = share_total_cost = share_commission = 0
         for i in range(len(share_list)):
 
             share_type = share_list[i][0]
             amount_new = share_list[i][1]
-            total_cost_new = share_list[i][2]
-            commission_new = share_list[i][3] + share_list[i][4]
+            share_total_cost_new = share_list[i][2]
+            share_commission_new = share_list[i][3] + share_list[i][4]
 
             if share_type == 'Покупка':
-                amount += amount_new
-                total_cost += total_cost_new
-                commission += commission_new
-                price_avg = round((total_cost + commission) / amount, round_numb)
+                share_amount += amount_new
+                share_total_cost += share_total_cost_new
+                share_commission += share_commission_new
+                share_price_avg = round((share_total_cost + share_commission) / share_amount, round_numb)
 
             elif share_type == 'Продажа':
-                amount -= amount_new
-                total_cost = amount * price_avg
+                share_amount -= amount_new
+                share_total_cost = share_amount * share_price_avg
 
-                if amount > 0:
-                    commission += commission_new
+                if share_amount > 0:
+                    share_commission += share_commission_new
                 else:
-                    commission = 0
+                    share_commission = 0
 
             else:
                 raise Exception('Неверный вид транзакции')
 
-        share_amount_dict[ticker] = amount
-        share_price_dict[ticker] = price_avg
-        commission_dict[ticker] = round(commission, 2)
+        share_amount_dict[ticker] = share_amount
+        share_price_dict[ticker] = share_price_avg
+        share_commission_dict[ticker] = round(share_commission, 2)
 
-    return share_amount_dict, share_price_dict, commission_dict
+    return share_amount_dict, share_price_dict, share_commission_dict
 
 
 def get_trading_dict():
@@ -143,10 +143,10 @@ def get_coupon_dict(tickers: list):
     url = "https://iss.moex.com/iss/engines/stock/markets/bonds/boards/TQOB/securities.csv?iss.meta=off&iss.only" \
           "=securities&securities.columns=SECID,ACCRUEDINT "
     csv_text = requests.get(url).text.split('\n')
+
     for ticker in tickers:
         for line in csv_text:
             line = line.split(';')
-
             if ticker in line:
                 coupon_dict[ticker] = line[1]
 
@@ -155,7 +155,7 @@ def get_coupon_dict(tickers: list):
 
 def main():
 
-    mail_main()
+    # mail_main()
     parser_main()
 
     portfolio = pd.read_csv('portfolio.csv')
@@ -180,7 +180,7 @@ def main():
     }
 
     fix_split(ticker_list, transactions, transactions_executed, share_split_dict)
-    share_amount_dict, share_price_dict, commission_dict = get_stock_data_dict(ticker_list, transactions_executed)
+    share_amount_dict, share_price_dict, share_commission_dict = get_stock_data_dict(ticker_list, transactions_executed)
     last_prices_dict = get_last_prices_dict(ticker_list)
     coupon_dict = get_coupon_dict(ticker_list)
 
@@ -189,13 +189,15 @@ def main():
         'НКД': coupon_dict,
         'Количество': share_amount_dict,
         'Средняя цена': share_price_dict,
-        'Комиссия': commission_dict
+        'Комиссия': share_commission_dict
     }
 
     main_df = pd.DataFrame.from_dict(portfolio_dict)
     main_df.index.name = 'Название'
-    main_df.loc[main_df['Котировки'] == '', 'Котировки'] = np.nan
-    main_df.dropna(axis=0, subset='Котировки', inplace=True)
+    # main_df.loc[main_df['Котировки'] == '', 'Котировки'] = np.nan
+    # main_df.loc[main_df['Количество'] == 0, 'Количество'] = np.nan
+    main_df = main_df.drop(main_df[main_df['Количество'] == 0].index)
+    main_df.dropna(axis=0, subset=['Котировки'], inplace=True)
     main_df[['Котировки', 'НКД']] = main_df[['Котировки', 'НКД']].astype('float64')
     main_df['Текущая цена'] = main_df['Котировки'] * main_df['Количество']
     main_df['P/L, руб.'] = main_df['Текущая цена'] - main_df['Средняя цена'] * main_df['Количество']
