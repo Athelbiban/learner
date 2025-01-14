@@ -8,6 +8,8 @@ from parser_broker_report import main as parser_main
 def fix_split(ticker_list, transactions, transactions_executed, share_split_dict):
 
     replacement_dict = {
+        'VTBE': 'RSHE',
+        'RU000A102HB1': 'SU26227RMFS7',
         'RU000A1038V6': 'SU26238RMFS4',
         'RU000A101QE0': 'SU26234RMFS3'
     }
@@ -197,7 +199,8 @@ def main():
     # main_df.loc[main_df['Котировки'] == '', 'Котировки'] = np.nan
     # main_df.loc[main_df['Количество'] == 0, 'Количество'] = np.nan
     main_df = main_df.drop(main_df[main_df['Количество'] == 0].index)
-    main_df.dropna(axis=0, subset=['Котировки'], inplace=True)
+    main_df = main_df.drop(main_df[main_df['Котировки'] == ''].index)
+    # main_df.dropna(axis=0, subset=['Котировки'], inplace=True)
     main_df[['Котировки', 'НКД']] = main_df[['Котировки', 'НКД']].astype('float64')
     main_df['Текущая цена'] = main_df['Котировки'] * main_df['Количество']
     main_df['P/L, руб.'] = main_df['Текущая цена'] - main_df['Средняя цена'] * main_df['Количество']
